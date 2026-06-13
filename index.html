@@ -6,33 +6,37 @@
   <title>Jisu | Fullstack Developer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     /* ===========================
        DESIGN TOKENS
     =========================== */
     :root {
-      --bg-base:       #080C14;
-      --bg-surface:    #0F1520;
-      --bg-card:       #131A27;
-      --bg-card-hover: #182030;
-      --border:        #1E2D40;
-      --border-bright: #2A3F58;
-      --accent:        #00D4AA;
-      --accent-dim:    #007A62;
-      --accent-glow:   rgba(0, 212, 170, 0.12);
+      --bg-base:       #0A0E18;
+      --bg-surface:    #0F1420;
+      --bg-card:       #131927;
+      --bg-card-hover: #17202E;
+      --bg-detail:     #0C1119;
+      --border:        #1C2A3A;
+      --border-bright: #263A50;
+      --border-active: #00FF88;
+      --accent:        #00FF88;
+      --accent-dim:    #009955;
+      --accent-glow:   rgba(0, 255, 136, 0.10);
+      --accent-glow2:  rgba(0, 255, 136, 0.05);
       --danger:        #FF4D6A;
       --danger-dim:    rgba(255, 77, 106, 0.15);
-      --success-dim:   rgba(0, 212, 170, 0.12);
-      --text-primary:  #E8F0F7;
-      --text-secondary:#8899AA;
-      --text-muted:    #4A5A6A;
+      --success-dim:   rgba(0, 255, 136, 0.10);
+      --text-primary:  #EDF2F7;
+      --text-secondary:#7A8FA8;
+      --text-muted:    #3D5060;
       --mono:          'JetBrains Mono', 'Courier New', monospace;
-      --sans:          -apple-system, 'Segoe UI', 'Noto Sans KR', sans-serif;
-      --radius-sm:     6px;
+      --sans:          'Inter', -apple-system, 'Segoe UI', sans-serif;
+      --radius-sm:     5px;
       --radius-md:     10px;
-      --radius-lg:     16px;
+      --radius-lg:     14px;
       --transition:    0.22s cubic-bezier(0.4, 0, 0.2, 1);
+      --left-w:        360px;
     }
 
     /* ===========================
@@ -52,20 +56,20 @@
     button { cursor: pointer; font-family: inherit; border: none; background: none; }
 
     /* ===========================
-       LAYOUT UTILITIES
+       LAYOUT
     =========================== */
     .container {
       width: 100%;
-      max-width: 1100px;
+      max-width: 1160px;
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 28px;
     }
     .section-gap { padding: 100px 0; }
 
     /* ===========================
        SCROLLBAR
     =========================== */
-    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: var(--bg-base); }
     ::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 3px; }
 
@@ -76,11 +80,12 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      height: 60px;
+      height: 58px;
       display: flex;
       align-items: center;
-      background: rgba(8, 12, 20, 0.88);
-      backdrop-filter: blur(12px);
+      background: rgba(10, 14, 24, 0.90);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid transparent;
       transition: border-color var(--transition);
     }
@@ -93,7 +98,7 @@
     }
     .nav-logo {
       font-family: var(--mono);
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: 600;
       color: var(--accent);
       letter-spacing: 0.02em;
@@ -101,17 +106,29 @@
     .nav-logo span { color: var(--text-secondary); }
     .nav-links {
       display: flex;
-      gap: 32px;
+      gap: 30px;
     }
     .nav-links a {
       font-family: var(--mono);
-      font-size: 0.78rem;
+      font-size: 0.73rem;
       color: var(--text-secondary);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-transform: lowercase;
       transition: color var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0; right: 0;
+      height: 1px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transition: transform var(--transition);
+      transform-origin: left;
     }
     .nav-links a:hover { color: var(--accent); }
+    .nav-links a:hover::after { transform: scaleX(1); }
 
     /* ===========================
        HERO
@@ -120,7 +137,7 @@
       min-height: 100vh;
       display: flex;
       align-items: center;
-      padding-top: 60px;
+      padding-top: 58px;
       position: relative;
       overflow: hidden;
     }
@@ -130,90 +147,91 @@
       background-image:
         linear-gradient(var(--border) 1px, transparent 1px),
         linear-gradient(90deg, var(--border) 1px, transparent 1px);
-      background-size: 60px 60px;
-      opacity: 0.25;
+      background-size: 55px 55px;
+      opacity: 0.22;
       mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%);
     }
     .hero-glow {
       position: absolute;
-      width: 600px; height: 600px;
+      width: 700px; height: 700px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,212,170,0.08) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(0,255,136,0.07) 0%, transparent 70%);
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       pointer-events: none;
     }
-    .hero-content {
-      position: relative;
-      z-index: 1;
-    }
+    .hero-content { position: relative; z-index: 1; }
     .hero-eyebrow {
       font-family: var(--mono);
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       color: var(--accent);
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
     .hero-eyebrow::before {
       content: '';
       display: block;
-      width: 24px; height: 1px;
+      width: 28px; height: 1px;
       background: var(--accent);
     }
     .hero-headline {
       font-size: clamp(2rem, 5vw, 3.4rem);
       font-weight: 700;
-      line-height: 1.2;
-      letter-spacing: -0.02em;
+      line-height: 1.18;
+      letter-spacing: -0.025em;
       margin-bottom: 28px;
       color: var(--text-primary);
+      font-family: var(--sans);
     }
     .hero-headline em {
       font-style: normal;
       color: var(--accent);
-      position: relative;
     }
     .hero-body {
-      max-width: 600px;
-      font-size: 1.05rem;
+      max-width: 580px;
+      font-size: 1rem;
       color: var(--text-secondary);
-      line-height: 1.8;
-      margin-bottom: 40px;
+      line-height: 1.85;
+      margin-bottom: 42px;
     }
     .hero-body strong { color: var(--text-primary); font-weight: 500; }
     .hero-cta-row {
       display: flex;
-      gap: 14px;
+      gap: 12px;
       flex-wrap: wrap;
     }
     .btn-primary {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 12px 26px;
+      padding: 11px 24px;
       background: var(--accent);
       color: #000;
       font-family: var(--mono);
-      font-size: 0.82rem;
-      font-weight: 600;
+      font-size: 0.78rem;
+      font-weight: 700;
       border-radius: var(--radius-sm);
       letter-spacing: 0.04em;
-      transition: opacity var(--transition), transform var(--transition);
+      transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
     }
-    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-primary:hover {
+      opacity: 0.90;
+      transform: translateY(-1px);
+      box-shadow: 0 0 20px rgba(0,255,136,0.3);
+    }
     .btn-secondary {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 12px 26px;
+      padding: 11px 24px;
       border: 1px solid var(--border-bright);
       color: var(--text-secondary);
       font-family: var(--mono);
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       border-radius: var(--radius-sm);
       letter-spacing: 0.04em;
       transition: border-color var(--transition), color var(--transition), transform var(--transition);
@@ -224,16 +242,12 @@
       transform: translateY(-1px);
     }
     .hero-stats {
-      margin-top: 64px;
+      margin-top: 68px;
       display: flex;
-      gap: 40px;
+      gap: 44px;
       flex-wrap: wrap;
     }
-    .stat-item {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
+    .stat-item { display: flex; flex-direction: column; gap: 4px; }
     .stat-num {
       font-family: var(--mono);
       font-size: 2rem;
@@ -241,28 +255,18 @@
       color: var(--accent);
       line-height: 1;
     }
-    .stat-label {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      letter-spacing: 0.04em;
-    }
-    .stat-divider {
-      width: 1px;
-      background: var(--border);
-      align-self: stretch;
-    }
+    .stat-label { font-size: 0.74rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .stat-divider { width: 1px; background: var(--border); align-self: stretch; }
 
     /* ===========================
        SECTION HEADER
     =========================== */
-    .section-header {
-      margin-bottom: 56px;
-    }
+    .section-header { margin-bottom: 52px; }
     .section-label {
       font-family: var(--mono);
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--accent);
-      letter-spacing: 0.14em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       margin-bottom: 12px;
     }
@@ -274,269 +278,7 @@
     }
 
     /* ===========================
-       PROJECT GRID
-    =========================== */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    .project-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      transition: border-color var(--transition), background var(--transition);
-      cursor: pointer;
-    }
-    .project-card:hover {
-      border-color: var(--border-bright);
-      background: var(--bg-card-hover);
-    }
-    .project-card.active {
-      border-color: var(--accent-dim);
-      grid-column: 1 / -1;
-    }
-
-    /* Card summary row */
-    .card-summary {
-      padding: 28px 28px 24px;
-    }
-    .card-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 14px;
-      gap: 12px;
-    }
-    .card-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .card-index {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      color: var(--text-muted);
-      letter-spacing: 0.1em;
-    }
-    .card-status-badge {
-      display: inline-block;
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      padding: 2px 8px;
-      border-radius: 20px;
-      letter-spacing: 0.06em;
-      font-weight: 500;
-    }
-    .badge-live   { background: rgba(0,212,170,0.12); color: var(--accent); }
-    .badge-wip    { background: rgba(255,180,0,0.12);  color: #FFC53D; }
-    .badge-team   { background: rgba(130,80,255,0.12); color: #A78BFA; }
-    .badge-main   { background: rgba(0,212,170,0.2);  color: var(--accent); border: 1px solid var(--accent-dim); }
-    .card-toggle-icon {
-      font-family: var(--mono);
-      font-size: 1rem;
-      color: var(--text-muted);
-      transition: transform var(--transition), color var(--transition);
-      margin-top: 2px;
-      flex-shrink: 0;
-    }
-    .project-card.active .card-toggle-icon {
-      transform: rotate(180deg);
-      color: var(--accent);
-    }
-    .card-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      color: var(--text-primary);
-      margin-bottom: 8px;
-    }
-    .card-subtitle {
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin-bottom: 18px;
-    }
-    .stack-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-    .stack-badge {
-      display: inline-block;
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      padding: 3px 9px;
-      border-radius: var(--radius-sm);
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      color: var(--text-secondary);
-      letter-spacing: 0.04em;
-    }
-
-    /* Card link row */
-    .card-links {
-      display: flex;
-      gap: 10px;
-      margin-top: 18px;
-      flex-wrap: wrap;
-    }
-    .link-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      padding: 5px 12px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-bright);
-      color: var(--text-muted);
-      letter-spacing: 0.04em;
-      transition: border-color var(--transition), color var(--transition);
-    }
-    .link-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-    .link-btn svg { flex-shrink: 0; }
-
-    /* ===========================
-       ACCORDION DETAIL
-    =========================== */
-    .card-detail {
-      display: none;
-      padding: 0 28px 28px;
-    }
-    .project-card.active .card-detail {
-      display: block;
-    }
-    .detail-divider {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin-bottom: 28px;
-    }
-    .detail-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-    @media (max-width: 720px) {
-      .detail-grid { grid-template-columns: 1fr; }
-    }
-    .detail-block {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 20px;
-    }
-    .detail-block-full {
-      grid-column: 1 / -1;
-    }
-    .detail-block-label {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .detail-block-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-    .detail-body {
-      font-size: 0.88rem;
-      color: var(--text-secondary);
-      line-height: 1.75;
-    }
-    .detail-body strong { color: var(--text-primary); font-weight: 500; }
-
-    /* Bullet list inside detail */
-    .detail-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .detail-list li {
-      display: flex;
-      gap: 10px;
-      font-size: 0.86rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-    .detail-list li::before {
-      content: '→';
-      color: var(--accent);
-      flex-shrink: 0;
-      font-family: var(--mono);
-    }
-
-    /* Troubleshooting diff block */
-    .ts-block {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .ts-row {
-      border-radius: var(--radius-sm);
-      padding: 12px 16px;
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      line-height: 1.6;
-    }
-    .ts-row-cause {
-      background: var(--danger-dim);
-      border-left: 3px solid var(--danger);
-      color: #FFA0B0;
-    }
-    .ts-row-fix {
-      background: var(--success-dim);
-      border-left: 3px solid var(--accent);
-      color: #7FFFD8;
-    }
-    .ts-row-result {
-      background: rgba(255,255,255,0.03);
-      border-left: 3px solid var(--border-bright);
-      color: var(--text-secondary);
-    }
-    .ts-row-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      opacity: 0.7;
-      margin-bottom: 4px;
-    }
-
-    /* Next step pills */
-    .nextstep-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .nextstep-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-    .nextstep-item::before {
-      content: '◈';
-      color: var(--accent);
-      flex-shrink: 0;
-      font-size: 0.7rem;
-      margin-top: 3px;
-    }
-
-    /* ===========================
-       SKILLS / ABOUT STRIP
+       ABOUT / SKILLS
     =========================== */
     #about {
       background: var(--bg-surface);
@@ -549,7 +291,6 @@
       gap: 60px;
       align-items: center;
     }
-    .about-left {}
     .about-left p {
       font-size: 0.92rem;
       color: var(--text-secondary);
@@ -557,31 +298,30 @@
       margin-top: 20px;
     }
     .about-left p strong { color: var(--text-primary); }
-    .about-right {}
-    .skills-group {
-      margin-bottom: 22px;
-    }
+    .skills-group { margin-bottom: 22px; }
     .skills-group-label {
       font-family: var(--mono);
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       color: var(--text-muted);
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       margin-bottom: 10px;
     }
-    .skills-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-    }
+    .skills-row { display: flex; flex-wrap: wrap; gap: 7px; }
     .skill-chip {
       font-family: var(--mono);
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       padding: 4px 11px;
       border-radius: 20px;
       border: 1px solid var(--border-bright);
       color: var(--text-secondary);
       background: rgba(255,255,255,0.02);
+      transition: border-color var(--transition), color var(--transition), background var(--transition);
+    }
+    .skill-chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-glow2);
     }
     .skill-chip.highlight {
       border-color: var(--accent-dim);
@@ -590,11 +330,354 @@
     }
 
     /* ===========================
+       PROJECTS — 2-COLUMN STICKY LAYOUT
+    =========================== */
+    #projects { background: var(--bg-base); }
+
+    .projects-layout {
+      display: grid;
+      grid-template-columns: var(--left-w) 1fr;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      min-height: 600px;
+    }
+
+    /* ── LEFT: Card List ── */
+    .projects-left {
+      border-right: 1px solid var(--border);
+      background: var(--bg-surface);
+      overflow-y: auto;
+      max-height: calc(100vh - 100px);
+      position: sticky;
+      top: 80px;
+      align-self: start;
+    }
+    .projects-left::-webkit-scrollbar { width: 3px; }
+    .projects-left::-webkit-scrollbar-thumb { background: var(--border); }
+
+    .left-header {
+      padding: 20px 22px 16px;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--bg-card);
+    }
+
+    .project-list-item {
+      padding: 20px 22px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background var(--transition), border-left-color var(--transition);
+      border-left: 3px solid transparent;
+      position: relative;
+    }
+    .project-list-item:last-child { border-bottom: none; }
+    .project-list-item:hover {
+      background: var(--bg-card-hover);
+    }
+    .project-list-item.active {
+      background: var(--bg-card);
+      border-left-color: var(--accent);
+    }
+    .project-list-item.active::after {
+      content: '';
+      position: absolute;
+      right: -1px; top: 50%;
+      transform: translateY(-50%);
+      width: 0; height: 0;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-right: 8px solid var(--bg-detail);
+    }
+
+    .list-item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .list-item-index {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+    .list-item-status {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      padding: 2px 7px;
+      border-radius: 20px;
+      letter-spacing: 0.06em;
+      font-weight: 500;
+    }
+    .badge-live   { background: rgba(0,255,136,0.12); color: var(--accent); }
+    .badge-wip    { background: rgba(255,180,0,0.12);  color: #FFC53D; }
+    .badge-team   { background: rgba(130,80,255,0.12); color: #A78BFA; }
+    .badge-main   { background: rgba(0,255,136,0.18);  color: var(--accent); border: 1px solid var(--accent-dim); }
+    .badge-deployed { background: rgba(0,180,255,0.12); color: #60C8FF; }
+
+    .list-item-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+    .project-list-item.active .list-item-title { color: var(--accent); }
+
+    .list-item-sub {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .list-item-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    .mini-badge {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      padding: 2px 7px;
+      border-radius: var(--radius-sm);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+      transition: border-color var(--transition), color var(--transition);
+    }
+    .project-list-item.active .mini-badge {
+      border-color: var(--accent-dim);
+      color: var(--text-secondary);
+    }
+
+    /* ── RIGHT: Detail Panel ── */
+    .projects-right {
+      background: var(--bg-detail);
+      min-height: 600px;
+      overflow-y: auto;
+    }
+
+    .detail-panel {
+      display: none;
+      padding: 32px 36px 40px;
+      animation: fadeIn 0.28s ease;
+    }
+    .detail-panel.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateX(12px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .detail-header {
+      margin-bottom: 28px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--border);
+    }
+    .detail-proj-index {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .detail-title {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+      font-family: var(--sans);
+    }
+    .detail-title-en {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      margin-bottom: 12px;
+    }
+    .detail-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      max-width: 600px;
+    }
+    .detail-link-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-bright);
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      transition: border-color var(--transition), color var(--transition), background var(--transition);
+    }
+    .link-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-glow2);
+    }
+
+    /* detail sections */
+    .detail-sections {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .detail-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 22px 24px;
+    }
+    .ds-label {
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      color: var(--accent);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .ds-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .detail-list {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .detail-list li {
+      display: flex;
+      gap: 10px;
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+    .detail-list li::before {
+      content: '→';
+      color: var(--accent);
+      flex-shrink: 0;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      margin-top: 1px;
+    }
+    .detail-list li strong { color: var(--text-primary); font-weight: 500; }
+    .detail-list li code {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--accent);
+      background: var(--accent-glow);
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+
+    /* troubleshooting diff */
+    .ts-block { display: flex; flex-direction: column; gap: 10px; }
+    .ts-row {
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      line-height: 1.65;
+    }
+    .ts-row-cause {
+      background: var(--danger-dim);
+      border-left: 3px solid var(--danger);
+      color: #FFA0B0;
+    }
+    .ts-row-fix {
+      background: var(--success-dim);
+      border-left: 3px solid var(--accent);
+      color: #7DFFD6;
+    }
+    .ts-row-result {
+      background: rgba(255,255,255,0.025);
+      border-left: 3px solid var(--border-bright);
+      color: var(--text-secondary);
+    }
+    .ts-row-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.65;
+      margin-bottom: 5px;
+    }
+    .ts-row code {
+      background: rgba(0,0,0,0.3);
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+
+    /* next step */
+    .nextstep-list { display: flex; flex-direction: column; gap: 9px; }
+    .nextstep-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.83rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .nextstep-item::before {
+      content: '◈';
+      color: var(--accent);
+      flex-shrink: 0;
+      font-size: 0.65rem;
+      margin-top: 4px;
+      font-family: var(--mono);
+    }
+
+    /* placeholder when nothing selected */
+    .detail-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      min-height: 500px;
+      gap: 16px;
+      color: var(--text-muted);
+    }
+    .detail-placeholder .ph-icon {
+      font-size: 2.4rem;
+      opacity: 0.3;
+    }
+    .detail-placeholder p {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+    }
+
+    /* ===========================
        CONTACT
     =========================== */
-    #contact {
-      text-align: center;
-    }
+    #contact { text-align: center; }
     .contact-headline {
       font-size: clamp(1.8rem, 4vw, 2.8rem);
       font-weight: 700;
@@ -609,16 +692,16 @@
     .contact-links {
       display: flex;
       justify-content: center;
-      gap: 16px;
+      gap: 14px;
       flex-wrap: wrap;
     }
     .contact-link-btn {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 13px 28px;
+      padding: 12px 26px;
       font-family: var(--mono);
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       border-radius: var(--radius-sm);
       border: 1px solid var(--border-bright);
       color: var(--text-secondary);
@@ -629,16 +712,17 @@
       border-color: var(--accent);
       color: var(--accent);
       transform: translateY(-2px);
+      background: var(--accent-glow2);
     }
     .contact-link-btn.primary-contact {
       background: var(--accent);
       border-color: var(--accent);
       color: #000;
-      font-weight: 600;
+      font-weight: 700;
     }
     .contact-link-btn.primary-contact:hover {
-      opacity: 0.85;
-      color: #000;
+      opacity: 0.85; color: #000;
+      box-shadow: 0 0 24px rgba(0,255,136,0.25);
     }
 
     /* ===========================
@@ -646,12 +730,12 @@
     =========================== */
     footer {
       border-top: 1px solid var(--border);
-      padding: 28px 0;
+      padding: 26px 0;
       text-align: center;
     }
     footer p {
       font-family: var(--mono);
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--text-muted);
       letter-spacing: 0.04em;
     }
@@ -678,35 +762,41 @@
     =========================== */
     .reveal {
       opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.55s ease, transform 0.55s ease;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* ===========================
        RESPONSIVE
     =========================== */
-    @media (max-width: 768px) {
-      .projects-grid { grid-template-columns: 1fr; }
-      .project-card.active { grid-column: 1; }
+    @media (max-width: 860px) {
+      :root { --left-w: 280px; }
+    }
+    @media (max-width: 680px) {
+      .projects-layout {
+        grid-template-columns: 1fr;
+        border-radius: var(--radius-md);
+      }
+      .projects-left {
+        position: static;
+        max-height: none;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      .project-list-item.active::after { display: none; }
       .about-inner { grid-template-columns: 1fr; gap: 36px; }
-      .hero-stats { gap: 24px; }
+      .hero-stats { gap: 22px; }
       .stat-divider { display: none; }
       .nav-links { gap: 18px; }
+      .detail-panel { padding: 24px 22px 32px; }
     }
-    @media (max-width: 480px) {
-      .nav-links a { font-size: 0.7rem; }
-      .detail-grid { grid-template-columns: 1fr; }
+    @media (max-width: 400px) {
+      .nav-links a { font-size: 0.68rem; }
     }
 
-    /* ===========================
-       SELECTION
-    =========================== */
     ::selection {
-      background: rgba(0, 212, 170, 0.2);
+      background: rgba(0, 255, 136, 0.18);
       color: var(--text-primary);
     }
   </style>
@@ -720,9 +810,9 @@
     <div class="container nav-inner">
       <a href="#hero" class="nav-logo">jisu.dev<span>▋</span></a>
       <ul class="nav-links">
-        <li><a href="#about">Introduce</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#about">introduce</a></li>
+        <li><a href="#projects">projects</a></li>
+        <li><a href="#contact">contact</a></li>
       </ul>
     </div>
   </nav>
@@ -747,12 +837,12 @@
       </p>
       <div class="hero-cta-row">
         <a href="#projects" class="btn-primary">
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Projects 보기
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          projects 보기
         </a>
         <a href="#contact" class="btn-secondary">
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 4h12v9H2V4zm0 0l6 5 6-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Contact
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M2 4h12v9H2V4zm0 0l6 5 6-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          contact
         </a>
       </div>
       <div class="hero-stats">
@@ -833,57 +923,126 @@
   </section>
 
   <!-- =====================
-       PROJECTS
+       PROJECTS — 2-COLUMN STICKY LAYOUT
   ===================== -->
   <section id="projects" class="section-gap">
     <div class="container">
       <div class="section-header reveal">
         <div class="section-label">// projects</div>
-        <h2 class="section-title">카드를 클릭해<br/>상세 구현 내용을 확인하세요</h2>
+        <h2 class="section-title">좌측 카드를 클릭해<br/>상세 구현 내용을 확인하세요</h2>
       </div>
 
-      <div class="projects-grid">
+      <div class="projects-layout reveal">
 
-        <!-- ── Project 1: 듀오잉수 ── -->
-        <div class="project-card reveal" data-card="0">
-          <div class="card-summary">
-            <div class="card-top">
-              <div class="card-meta">
-                <span class="card-index">PROJECT_01</span>
-                <span class="card-status-badge badge-main">⬡ MAIN</span>
-              </div>
-              <span class="card-toggle-icon">↓</span>
+        <!-- ── LEFT PANEL ── -->
+        <div class="projects-left">
+          <div class="left-header">projects_list.json</div>
+
+          <!-- Item 1 -->
+          <div class="project-list-item active" data-proj="0">
+            <div class="list-item-top">
+              <span class="list-item-index">PROJECT_01</span>
+              <span class="list-item-status badge-main">⬡ MAIN</span>
             </div>
-            <h3 class="card-title">듀오잉수 (duoingsu)</h3>
-            <p class="card-subtitle">기획부터 인프라 구축, 네이티브 웹 기술 제어까지 풀스택으로 완성한 메인 프로젝트</p>
-            <div class="stack-badges">
-              <span class="stack-badge">Next.js</span>
-              <span class="stack-badge">Turborepo</span>
-              <span class="stack-badge">CF Workers</span>
-              <span class="stack-badge">D1 DB</span>
-              <span class="stack-badge">Drizzle ORM</span>
-              <span class="stack-badge">Web Push API</span>
-            </div>
-            <div class="card-links">
-              <a href="#" class="link-btn">
-                <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                GitHub
-              </a>
-              <a href="#" class="link-btn">
-                <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 3h10v10H3V3zm7-2v2M6 1v2M1 6h2M1 10h2M13 6h2M13 10h2M6 13v2M10 13v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                Live Demo
-              </a>
+            <div class="list-item-title">듀오잉수</div>
+            <div class="list-item-sub">풀스택 메인 프로젝트 — 기획부터 인프라까지</div>
+            <div class="list-item-badges">
+              <span class="mini-badge">Next.js</span>
+              <span class="mini-badge">CF Workers</span>
+              <span class="mini-badge">D1 DB</span>
+              <span class="mini-badge">Web Push</span>
             </div>
           </div>
 
-          <div class="card-detail">
-            <hr class="detail-divider" />
-            <div class="detail-grid">
+          <!-- Item 2 -->
+          <div class="project-list-item" data-proj="1">
+            <div class="list-item-top">
+              <span class="list-item-index">PROJECT_02</span>
+              <span class="list-item-status badge-team">◈ TEAM</span>
+            </div>
+            <div class="list-item-title">탔시유 (TA-CU)</div>
+            <div class="list-item-sub">GPS 기반 공공 자전거 앱 — 팀 협업 리드</div>
+            <div class="list-item-badges">
+              <span class="mini-badge">React Native</span>
+              <span class="mini-badge">Expo</span>
+              <span class="mini-badge">Firebase</span>
+            </div>
+          </div>
 
-              <div class="detail-block">
-                <div class="detail-block-label">🛠 핵심 구현</div>
+          <!-- Item 3 -->
+          <div class="project-list-item" data-proj="2">
+            <div class="list-item-top">
+              <span class="list-item-index">PROJECT_03</span>
+              <span class="list-item-status badge-live">▸ LIVE</span>
+            </div>
+            <div class="list-item-title">세븐틴 제대 카운트다운</div>
+            <div class="list-item-sub">실 유저 운영 중 — 요구사항 발견 & 지속 리팩토링</div>
+            <div class="list-item-badges">
+              <span class="mini-badge">React</span>
+              <span class="mini-badge">YouTube API</span>
+              <span class="mini-badge">CSS</span>
+            </div>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="project-list-item" data-proj="3">
+            <div class="list-item-top">
+              <span class="list-item-index">PROJECT_04</span>
+              <span class="list-item-status badge-wip">◐ WIP</span>
+            </div>
+            <div class="list-item-title">엄마의 월급 계산기</div>
+            <div class="list-item-sub">도메인 분석 + 수식 모듈화 아키텍처</div>
+            <div class="list-item-badges">
+              <span class="mini-badge">React Native</span>
+              <span class="mini-badge">Expo</span>
+              <span class="mini-badge">Figma</span>
+            </div>
+          </div>
+
+          <!-- Item 5 -->
+          <div class="project-list-item" data-proj="4">
+            <div class="list-item-top">
+              <span class="list-item-index">PROJECT_05</span>
+              <span class="list-item-status badge-deployed">▸ DEPLOYED</span>
+            </div>
+            <div class="list-item-title">Poke상성 도감</div>
+            <div class="list-item-sub">외부 오픈 데이터 재가공 + 상성 알고리즘 설계</div>
+            <div class="list-item-badges">
+              <span class="mini-badge">HTML5</span>
+              <span class="mini-badge">JavaScript</span>
+              <span class="mini-badge">PokeAPI</span>
+            </div>
+          </div>
+
+        </div><!-- /projects-left -->
+
+        <!-- ── RIGHT PANEL ── -->
+        <div class="projects-right">
+
+          <!-- Detail 0: 듀오잉수 -->
+          <div class="detail-panel active" data-detail="0">
+            <div class="detail-header">
+              <div class="detail-proj-index">PROJECT_01 · MAIN</div>
+              <h3 class="detail-title">듀오잉수</h3>
+              <div class="detail-title-en">duoingsu — Learning Together Log App</div>
+              <p class="detail-desc">기획부터 인프라 구축, 네이티브 웹 기술 제어까지 풀스택으로 완성한 메인 프로젝트. Turborepo Monorepo + Cloudflare 무비용 서버리스 스택 + Web Push 인프라.</p>
+              <div class="detail-link-row">
+                <a href="#" class="link-btn">
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                  GitHub
+                </a>
+                <a href="#" class="link-btn">
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M8 2a6 6 0 100 12A6 6 0 008 2zm0 1.5a4.5 4.5 0 110 9 4.5 4.5 0 010-9zM7 5v4l3 1.5.5-.87L8 8.3V5H7z" fill="currentColor"/></svg>
+                  Live Demo
+                </a>
+              </div>
+            </div>
+
+            <div class="detail-sections">
+              <div class="detail-section">
+                <div class="ds-label">🛠 Key Engineering Points</div>
                 <ul class="detail-list">
-                  <li><span>Turborepo 기반 Monorepo 구조 설계 — apps/web, packages/shared 분리</span></li>
+                  <li><span>Turborepo 기반 Monorepo 구조 설계 — <code>apps/web</code>, <code>packages/shared</code> 분리</span></li>
                   <li><span>Cloudflare Pages + Workers + D1 + R2 무비용 고가용성 서버리스 스택 구축</span></li>
                   <li><span><strong>logical_date 알고리즘</strong> — 오전 6시 기준 데이터 마감 제어로 데이터 무결성 확보</span></li>
                   <li><span>VAPID 암호화 + Service Worker 기반 독립형 웹 푸시 인프라 구축</span></li>
@@ -891,207 +1050,149 @@
                 </ul>
               </div>
 
-              <div class="detail-block">
-                <div class="detail-block-label">📝 Next Step</div>
+              <div class="detail-section">
+                <div class="ds-label">🚨 Troubleshooting — Android VAPID Key 파싱 오류</div>
+                <div class="ts-block">
+                  <div class="ts-row ts-row-cause">
+                    <div class="ts-row-label">⚠ 원인 (CAUSE)</div>
+                    Android 환경에서 VAPID Public Key를 Base64 문자열 그대로 전달 시 브라우저 내부 파싱 오류로 Web Push 구독 실패. iOS와 달리 Android Chromium이 Uint8Array 바이너리 배열을 엄격하게 요구.
+                  </div>
+                  <div class="ts-row ts-row-fix">
+                    <div class="ts-row-label">✓ 해결 (FIX)</div>
+                    Base64 URL-safe 문자열 → Uint8Array 변환 유틸 함수를 직접 구현하여 applicationServerKey 인자로 주입. <code>urlBase64ToUint8Array(publicKey)</code> 함수를 shared 패키지에 등록하여 재사용.
+                  </div>
+                  <div class="ts-row ts-row-result">
+                    <div class="ts-row-label">◎ 결과 (RESULT)</div>
+                    Android / iOS / Desktop 크로스 브라우징 Web Push 구독 정상 동작 확인. shared 유틸로 추출하여 이후 다른 플랫폼 확장 시 코드 중복 없이 재사용 가능한 구조 확보.
+                  </div>
+                </div>
+              </div>
+
+              <div class="detail-section">
+                <div class="ds-label">📝 Next Step</div>
                 <div class="nextstep-list">
                   <div class="nextstep-item">연속 기록 스트릭(Streak) 시각화 대시보드</div>
                   <div class="nextstep-item">다중 이모지 반응 컴포넌트 터치 액션 최적화</div>
                   <div class="nextstep-item">30초 폴링 → WebSocket 실시간 동기화 전환 검토</div>
                 </div>
               </div>
-
-              <div class="detail-block detail-block-full">
-                <div class="detail-block-label">🚨 트러블슈팅 — Android VAPID Key 파싱 오류</div>
-                <div class="ts-block">
-                  <div class="ts-row ts-row-cause">
-                    <div class="ts-row-label">⚠ 원인 (CAUSE)</div>
-                    Android 환경에서 VAPID Public Key를 Base64 문자열 그대로 전달 시
-                    브라우저 내부 파싱 오류로 Web Push 구독 실패. iOS와 달리 Android Chromium이
-                    Uint8Array 바이너리 배열을 엄격하게 요구.
-                  </div>
-                  <div class="ts-row ts-row-fix">
-                    <div class="ts-row-label">✓ 해결 (FIX)</div>
-                    Base64 URL-safe 문자열 → Uint8Array 변환 유틸 함수를 직접 구현하여
-                    applicationServerKey 인자로 주입. <br/>
-                    urlBase64ToUint8Array(publicKey) 함수를 shared 패키지에 등록하여 재사용.
-                  </div>
-                  <div class="ts-row ts-row-result">
-                    <div class="ts-row-label">◎ 결과 (RESULT)</div>
-                    Android / iOS / Desktop 크로스 브라우징 Web Push 구독 정상 동작 확인.
-                    shared 유틸로 추출하여 이후 다른 플랫폼 확장 시 코드 중복 없이 재사용 가능한 구조 확보.
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- ── Project 2: 탔시유 ── -->
-        <div class="project-card reveal" data-card="1">
-          <div class="card-summary">
-            <div class="card-top">
-              <div class="card-meta">
-                <span class="card-index">PROJECT_02</span>
-                <span class="card-status-badge badge-team">◈ TEAM</span>
-              </div>
-              <span class="card-toggle-icon">↓</span>
-            </div>
-            <h3 class="card-title">탔시유 (TA-CU)</h3>
-            <p class="card-subtitle">대전시 공공 자전거 API와 GPS 기반 맵 라이브러리를 연동하고 브랜치 전략으로 팀 협업을 이끈 프로젝트</p>
-            <div class="stack-badges">
-              <span class="stack-badge">React Native</span>
-              <span class="stack-badge">Expo</span>
-              <span class="stack-badge">CF Workers</span>
-              <span class="stack-badge">Firebase Auth</span>
-              <span class="stack-badge">Git</span>
-            </div>
-            <div class="card-links">
-              <a href="#" class="link-btn">
-                <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                GitHub
-              </a>
             </div>
           </div>
 
-          <div class="card-detail">
-            <hr class="detail-divider" />
-            <div class="detail-grid">
+          <!-- Detail 1: 탔시유 -->
+          <div class="detail-panel" data-detail="1">
+            <div class="detail-header">
+              <div class="detail-proj-index">PROJECT_02 · TEAM</div>
+              <h3 class="detail-title">탔시유 (TA-CU)</h3>
+              <div class="detail-title-en">ta-cu — Daejeon Public Bike Tracker App</div>
+              <p class="detail-desc">대전시 공공 자전거 API와 GPS 기반 맵 라이브러리를 연동하고, 브랜치 전략으로 팀 협업을 이끈 프로젝트.</p>
+              <div class="detail-link-row">
+                <a href="#" class="link-btn">
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
 
-              <div class="detail-block">
-                <div class="detail-block-label">🛠 핵심 구현</div>
+            <div class="detail-sections">
+              <div class="detail-section">
+                <div class="ds-label">🛠 Key Engineering Points</div>
                 <ul class="detail-list">
                   <li><span>Expo 내 맵 컴포넌트 스크롤 간섭 이슈 직접 해결 (제스처 핸들러 분리)</span></li>
                   <li><span>공통 상수 관리 파일(<code>apiConstants.js</code>) 머지 충돌 중재 및 해결 주도</span></li>
                   <li><span>커밋 컨벤션 제안 및 브랜치 전략 문서화로 팀 생산성 향상</span></li>
-                  <li><span>Firebase Auth + AsyncStorage getReactNativePersistence 통합</span></li>
+                  <li><span>Firebase Auth + AsyncStorage <code>getReactNativePersistence</code> 통합</span></li>
                 </ul>
               </div>
 
-              <div class="detail-block">
-                <div class="detail-block-label">📝 Next Step</div>
+              <div class="detail-section">
+                <div class="ds-label">🚨 Troubleshooting — Cloudflare Tunnel SSL/TLS 프로토콜 누락</div>
+                <div class="ts-block">
+                  <div class="ts-row ts-row-cause">
+                    <div class="ts-row-label">⚠ 원인 (CAUSE)</div>
+                    Cloudflare Tunnel 배포 환경에서 환경변수에 저장된 API 엔드포인트 주소에 <code>https://</code> 프로토콜이 누락됨. TLS 인증 메커니즘이 강제 적용된 CF Tunnel의 특성상 일반 HTTP 요청을 거부하여 API 통신 전체가 침묵하며 실패.
+                  </div>
+                  <div class="ts-row ts-row-fix">
+                    <div class="ts-row-label">✓ 해결 (FIX)</div>
+                    Network 탭과 서버 로그를 교차 분석하여 요청 자체가 브라우저 단에서 차단됨을 확인. 환경변수 URL 앞에 <code>https://</code> 명시 후, Tunnel 재시작 시마다 주소 갱신이 필요한 구조적 문제를 팀 공유 문서로 기록하여 온보딩 비용 제거.
+                  </div>
+                  <div class="ts-row ts-row-result">
+                    <div class="ts-row-label">◎ 결과 (RESULT)</div>
+                    API 통신 정상화. 이후 팀 전원이 같은 실수를 반복하지 않도록 체크리스트 문서화 — 디버깅 경험을 팀 자산으로 전환.
+                  </div>
+                </div>
+              </div>
+
+              <div class="detail-section">
+                <div class="ds-label">📝 Next Step</div>
                 <div class="nextstep-list">
                   <div class="nextstep-item">Redis 인메모리 활용 실시간 집계 아키텍처</div>
                   <div class="nextstep-item">GPS 어뷰징 방지 — 평균 속도/거리 역산 미들웨어 도입</div>
                   <div class="nextstep-item">Tashu API 실시간 스테이션 재고 반영 고도화</div>
                 </div>
               </div>
-
-              <div class="detail-block detail-block-full">
-                <div class="detail-block-label">🚨 트러블슈팅 — Cloudflare Tunnel SSL/TLS 프로토콜 누락</div>
-                <div class="ts-block">
-                  <div class="ts-row ts-row-cause">
-                    <div class="ts-row-label">⚠ 원인 (CAUSE)</div>
-                    Cloudflare Tunnel 배포 환경에서 환경변수에 저장된 API 엔드포인트 주소에
-                    <code>https://</code> 프로토콜이 누락됨. TLS 인증 메커니즘이 강제 적용된 CF Tunnel의 특성상
-                    일반 HTTP 요청을 거부하여 API 통신 전체가 침묵하며 실패.
-                  </div>
-                  <div class="ts-row ts-row-fix">
-                    <div class="ts-row-label">✓ 해결 (FIX)</div>
-                    Network 탭과 서버 로그를 교차 분석하여 요청 자체가 브라우저 단에서 차단됨을 확인.
-                    환경변수 URL 앞에 <code>https://</code> 명시 후, Tunnel 재시작 시마다
-                    주소 갱신이 필요한 구조적 문제를 팀 공유 문서로 기록하여 온보딩 비용 제거.
-                  </div>
-                  <div class="ts-row ts-row-result">
-                    <div class="ts-row-label">◎ 결과 (RESULT)</div>
-                    API 통신 정상화. 이후 팀 전원이 같은 실수를 반복하지 않도록
-                    체크리스트 문서화 — 디버깅 경험을 팀 자산으로 전환.
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- ── Project 3: 세븐틴 카운트다운 ── -->
-        <div class="project-card reveal" data-card="2">
-          <div class="card-summary">
-            <div class="card-top">
-              <div class="card-meta">
-                <span class="card-index">PROJECT_03</span>
-                <span class="card-status-badge badge-live">▸ LIVE</span>
-              </div>
-              <span class="card-toggle-icon">↓</span>
-            </div>
-            <h3 class="card-title">세븐틴 제대 카운트다운</h3>
-            <p class="card-subtitle">실제 유저가 사용 중인 서비스를 운영하며 요구사항을 발견하고 지속적으로 리팩토링하는 경험</p>
-            <div class="stack-badges">
-              <span class="stack-badge">React</span>
-              <span class="stack-badge">JavaScript</span>
-              <span class="stack-badge">CSS</span>
-              <span class="stack-badge">YouTube Embed API</span>
-            </div>
-            <div class="card-links">
-              <a href="#" class="link-btn">
-                <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                GitHub
-              </a>
-              <a href="#" class="link-btn">
-                <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 3h10v10H3V3zm7-2v2M6 1v2M1 6h2M1 10h2M13 6h2M13 10h2M6 13v2M10 13v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                Live
-              </a>
             </div>
           </div>
 
-          <div class="card-detail">
-            <hr class="detail-divider" />
-            <div class="detail-grid">
+          <!-- Detail 2: 세븐틴 -->
+          <div class="detail-panel" data-detail="2">
+            <div class="detail-header">
+              <div class="detail-proj-index">PROJECT_03 · LIVE SERVICE</div>
+              <h3 class="detail-title">세븐틴 제대 카운트다운</h3>
+              <div class="detail-title-en">seventeen-countdown — Fan Service, Currently Live</div>
+              <p class="detail-desc">실제 유저가 사용 중인 서비스를 운영하며 요구사항을 발견하고 지속적으로 리팩토링하는 경험.</p>
+              <div class="detail-link-row">
+                <a href="#" class="link-btn">
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                  GitHub
+                </a>
+                <a href="#" class="link-btn">
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M3 3h10v10H3V3zm7-2v2M6 1v2M1 6h2M1 10h2M13 6h2M13 10h2M6 13v2M10 13v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  Live
+                </a>
+              </div>
+            </div>
 
-              <div class="detail-block">
-                <div class="detail-block-label">🛠 핵심 구현</div>
+            <div class="detail-sections">
+              <div class="detail-section">
+                <div class="ds-label">🛠 Key Engineering Points</div>
                 <ul class="detail-list">
                   <li><span>실시간 타이머 훅 및 YouTube Embed API 미디어 연동 링크 트리 구조 설계</span></li>
                   <li><span><code>packages/shared/style.css</code> 공통 스타일시트 도입 — 파편화된 스타일 리팩토링</span></li>
-                  <li><span>공통 훅(useCountdown) 분리로 다른 멤버 카운트다운에 재사용 가능한 구조 확보</span></li>
+                  <li><span>공통 훅(<code>useCountdown</code>) 분리로 다른 멤버 카운트다운에 재사용 가능한 구조 확보</span></li>
                   <li><span>실제 유저 반응을 기반으로 UGC 실시간 응원방 기능 업그레이드 진행 중</span></li>
                 </ul>
               </div>
 
-              <div class="detail-block">
-                <div class="detail-block-label">📝 서비스 운영 인사이트</div>
+              <div class="detail-section">
+                <div class="ds-label">📝 서비스 운영 인사이트</div>
                 <div class="nextstep-list">
                   <div class="nextstep-item">배포 후 유저 요청으로 멤버별 개별 카운트다운 기능 추가</div>
                   <div class="nextstep-item">링크 클릭률 분석으로 UI 배치 우선순위 재조정</div>
                   <div class="nextstep-item">실시간 응원방(UGC) — Web Push 연동 기능 개발 중</div>
                 </div>
               </div>
-
             </div>
           </div>
-        </div>
 
-        <!-- ── Project 4: 엄마의 월급 계산기 ── -->
-        <div class="project-card reveal" data-card="3">
-          <div class="card-summary">
-            <div class="card-top">
-              <div class="card-meta">
-                <span class="card-index">PROJECT_04</span>
-                <span class="card-status-badge badge-wip">◐ WIP</span>
+          <!-- Detail 3: 엄마의 월급 계산기 -->
+          <div class="detail-panel" data-detail="3">
+            <div class="detail-header">
+              <div class="detail-proj-index">PROJECT_04 · WIP</div>
+              <h3 class="detail-title">엄마의 월급 계산기</h3>
+              <div class="detail-title-en">salary-calculator — Shift Work Pay Engine</div>
+              <p class="detail-desc">주변의 실제 문제를 해결하기 위해 도메인 분석과 수식 모듈화 아키텍처를 설계하는 과정.</p>
+              <div class="detail-link-row">
+                <a href="#" class="link-btn">
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                  GitHub
+                </a>
               </div>
-              <span class="card-toggle-icon">↓</span>
             </div>
-            <h3 class="card-title">엄마의 월급 계산기</h3>
-            <p class="card-subtitle">주변의 실제 문제를 해결하기 위해 도메인 분석과 수식 모듈화 아키텍처를 설계하는 과정</p>
-            <div class="stack-badges">
-              <span class="stack-badge">React Native</span>
-              <span class="stack-badge">Expo</span>
-              <span class="stack-badge">Figma</span>
-            </div>
-            <div class="card-links">
-              <a href="#" class="link-btn">
-                <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                GitHub
-              </a>
-            </div>
-          </div>
 
-          <div class="card-detail">
-            <hr class="detail-divider" />
-            <div class="detail-grid">
-
-              <div class="detail-block">
-                <div class="detail-block-label">🛠 기획 및 설계 역량</div>
+            <div class="detail-sections">
+              <div class="detail-section">
+                <div class="ds-label">🛠 기획 및 설계 역량</div>
                 <ul class="detail-list">
                   <li><span>시중 계산기의 한계 분석 — <strong>교대 근무 / 변동 주휴수당</strong>을 반영하지 못하는 구조적 문제 도출</span></li>
                   <li><span>커스텀 근무 세팅 UI 레이아웃 Figma 설계 완료</span></li>
@@ -1099,56 +1200,39 @@
                 </ul>
               </div>
 
-              <div class="detail-block">
-                <div class="detail-block-label">📝 Next Step</div>
+              <div class="detail-section">
+                <div class="ds-label">📝 Next Step</div>
                 <div class="nextstep-list">
                   <div class="nextstep-item">수식 연산 모듈 단위 테스트 작성</div>
                   <div class="nextstep-item">교대 패턴 프리셋(2조 2교대, 3조 3교대) 저장 기능</div>
                   <div class="nextstep-item">Expo EAS Build 앱 스토어 배포</div>
                 </div>
               </div>
-
             </div>
           </div>
-        </div>
 
-        <!-- ── Project 5: Poke상성 도감 ── -->
-        <div class="project-card reveal" data-card="4">
-          <div class="card-summary">
-            <div class="card-top">
-              <div class="card-meta">
-                <span class="card-index">PROJECT_05</span>
-                <span class="card-status-badge badge-live">▸ DEPLOYED</span>
+          <!-- Detail 4: Poke상성 도감 -->
+          <div class="detail-panel" data-detail="4">
+            <div class="detail-header">
+              <div class="detail-proj-index">PROJECT_05 · DEPLOYED</div>
+              <h3 class="detail-title">Poke상성 도감</h3>
+              <div class="detail-title-en">poke-type — Type Matchup Algorithm & Mock API</div>
+              <p class="detail-desc">복잡한 외부 오픈 데이터를 재가공하고 다중 상성 알고리즘과 Mock API 구조를 직접 설계하며 기본기를 다진 프로젝트.</p>
+              <div class="detail-link-row">
+                <a href="#" class="link-btn">
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                  GitHub
+                </a>
+                <a href="#" class="link-btn">
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M3 3h10v10H3V3zm7-2v2M6 1v2M1 6h2M1 10h2M13 6h2M13 10h2M6 13v2M10 13v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  Live
+                </a>
               </div>
-              <span class="card-toggle-icon">↓</span>
             </div>
-            <h3 class="card-title">Poke상성 도감</h3>
-            <p class="card-subtitle">복잡한 외부 오픈 데이터를 재가공하고 다중 상성 알고리즘과 Mock API 구조를 직접 설계하며 기본기를 다진 프로젝트</p>
-            <div class="stack-badges">
-              <span class="stack-badge">HTML5</span>
-              <span class="stack-badge">CSS3</span>
-              <span class="stack-badge">JavaScript</span>
-              <span class="stack-badge">PokeAPI</span>
-              <span class="stack-badge">CF Pages</span>
-            </div>
-            <div class="card-links">
-              <a href="#" class="link-btn">
-                <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                GitHub
-              </a>
-              <a href="#" class="link-btn">
-                <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 3h10v10H3V3zm7-2v2M6 1v2M1 6h2M1 10h2M13 6h2M13 10h2M6 13v2M10 13v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                Live
-              </a>
-            </div>
-          </div>
 
-          <div class="card-detail">
-            <hr class="detail-divider" />
-            <div class="detail-grid">
-
-              <div class="detail-block">
-                <div class="detail-block-label">🛠 핵심 구현</div>
+            <div class="detail-sections">
+              <div class="detail-section">
+                <div class="ds-label">🛠 Key Engineering Points</div>
                 <ul class="detail-list">
                   <li><span>개발 착수 전 <strong>상세 워크플로우(흐름도) 선제 설계</strong> — 예외 처리 분기 미리 확보</span></li>
                   <li><span>이중 속성 조합 상성 배수 연산 알고리즘 직접 구현</span></li>
@@ -1157,20 +1241,19 @@
                 </ul>
               </div>
 
-              <div class="detail-block">
-                <div class="detail-block-label">📝 Next Step</div>
+              <div class="detail-section">
+                <div class="ds-label">📝 Next Step</div>
                 <div class="nextstep-list">
                   <div class="nextstep-item">static JSON → Cloudflare Workers + D1 DB 마이그레이션</div>
                   <div class="nextstep-item">커스텀 포켓몬 CRUD 생성 기능으로 고도화</div>
                   <div class="nextstep-item">Serverless 환경의 완전한 REST API 구조로 전환</div>
                 </div>
               </div>
-
             </div>
           </div>
-        </div>
 
-      </div><!-- /projects-grid -->
+        </div><!-- /projects-right -->
+      </div><!-- /projects-layout -->
     </div>
   </section>
 
@@ -1184,15 +1267,15 @@
       <p class="contact-sub">기술적인 문제를 같이 풀어나갈 팀을 찾고 있습니다.</p>
       <div class="contact-links">
         <a href="mailto:your@email.com" class="contact-link-btn primary-contact">
-          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 4h12v9H2V4zm0 0l6 5 6-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 4h12v9H2V4zm0 0l6 5 6-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           이메일 보내기
         </a>
         <a href="https://github.com/" target="_blank" rel="noopener" class="contact-link-btn">
-          <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
           GitHub
         </a>
         <a href="#" class="contact-link-btn">
-          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="3" stroke="currentColor" stroke-width="1.6"/><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.5"/><circle cx="11.5" cy="4.5" r="0.7" fill="currentColor"/></svg>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="3" stroke="currentColor" stroke-width="1.6"/><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.5"/><circle cx="11.5" cy="4.5" r="0.7" fill="currentColor"/></svg>
           Blog / Notion
         </a>
       </div>
@@ -1212,13 +1295,13 @@
        JAVASCRIPT
   ===================== -->
   <script>
-    // ─── Nav scroll style ───────────────────────────────────────
+    // ─── Nav scroll style ────────────────────────────────────────
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 20);
     }, { passive: true });
 
-    // ─── Scroll reveal ──────────────────────────────────────────
+    // ─── Scroll reveal ───────────────────────────────────────────
     const revealEls = document.querySelectorAll('.reveal');
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -1227,38 +1310,43 @@
           revealObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
     revealEls.forEach(el => revealObserver.observe(el));
 
-    // ─── Project card accordion ─────────────────────────────────
-    const cards = document.querySelectorAll('.project-card');
+    // ─── Project 2-column panel switcher ─────────────────────────
+    const listItems  = document.querySelectorAll('.project-list-item');
+    const detailPanels = document.querySelectorAll('.detail-panel');
 
-    cards.forEach(card => {
-      card.addEventListener('click', (e) => {
-        // Don't toggle if clicking a link
-        if (e.target.closest('a')) return;
+    listItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const idx = item.dataset.proj;
 
-        const isActive = card.classList.contains('active');
+        // Update left nav
+        listItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
 
-        // Close all
-        cards.forEach(c => c.classList.remove('active'));
+        // Swap detail panel
+        detailPanels.forEach(p => p.classList.remove('active'));
+        const target = document.querySelector(`.detail-panel[data-detail="${idx}"]`);
+        if (target) target.classList.add('active');
 
-        // If wasn't active, open this one
-        if (!isActive) {
-          card.classList.add('active');
-          // Smooth scroll to card after brief delay for layout shift
-          setTimeout(() => {
-            const cardTop = card.getBoundingClientRect().top + window.scrollY - 80;
-            window.scrollTo({ top: cardTop, behavior: 'smooth' });
-          }, 50);
-        }
+        // Scroll right panel to top
+        document.querySelector('.projects-right').scrollTop = 0;
       });
     });
 
-    // ─── Hero cursor blink (already CSS-driven, no JS needed)
-    // ─── Optional: stagger reveal delays for grid items
-    document.querySelectorAll('.project-card.reveal').forEach((card, i) => {
-      card.style.transitionDelay = `${i * 60}ms`;
+    // ─── Keyboard navigation for list items ──────────────────────
+    listItems.forEach((item, i) => {
+      item.setAttribute('tabindex', '0');
+      item.setAttribute('role', 'button');
+      item.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          item.click();
+        }
+        if (e.key === 'ArrowDown' && listItems[i + 1]) listItems[i + 1].focus();
+        if (e.key === 'ArrowUp'   && listItems[i - 1]) listItems[i - 1].focus();
+      });
     });
   </script>
 </body>
