@@ -6,1348 +6,1205 @@
   <title>Jisu | Fullstack Developer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    /* ===========================
-       DESIGN TOKENS
-    =========================== */
-    :root {
-      --bg-base:       #0A0E18;
-      --bg-surface:    #0F1420;
-      --bg-card:       #131927;
-      --bg-card-hover: #17202E;
-      --bg-detail:     #0C1119;
-      --border:        #1C2A3A;
-      --border-bright: #263A50;
-      --border-active: #00FF88;
-      --accent:        #00FF88;
-      --accent-dim:    #009955;
-      --accent-glow:   rgba(0, 255, 136, 0.10);
-      --accent-glow2:  rgba(0, 255, 136, 0.05);
-      --danger:        #FF4D6A;
-      --danger-dim:    rgba(255, 77, 106, 0.15);
-      --success-dim:   rgba(0, 255, 136, 0.10);
-      --text-primary:  #EDF2F7;
-      --text-secondary:#7A8FA8;
-      --text-muted:    #3D5060;
-      --mono:          'JetBrains Mono', 'Courier New', monospace;
-      --sans:          'Inter', -apple-system, 'Segoe UI', sans-serif;
-      --radius-sm:     5px;
-      --radius-md:     10px;
-      --radius-lg:     14px;
-      --transition:    0.22s cubic-bezier(0.4, 0, 0.2, 1);
-      --left-w:        360px;
-    }
+/* ============================================================
+   DESIGN TOKENS
+============================================================ */
+:root {
+  --bg:          #080C14;
+  --bg-raised:   #0D1220;
+  --bg-glass:    rgba(13,18,32,0.85);
+  --border:      #182030;
+  --border-mid:  #1E2E42;
+  --border-hi:   #243650;
+  --accent:      #00FF88;
+  --accent-dim:  #00804A;
+  --accent-glow: rgba(0,255,136,0.12);
+  --accent-g2:   rgba(0,255,136,0.06);
+  --danger:      #FF4D6A;
+  --danger-bg:   rgba(255,77,106,0.13);
+  --success-bg:  rgba(0,255,136,0.10);
+  --warn:        #FFC53D;
+  --warn-bg:     rgba(255,197,61,0.10);
+  --purple:      #A78BFA;
+  --blue:        #60C8FF;
+  --tx1:  #EDF2F7;
+  --tx2:  #6E8AA4;
+  --tx3:  #2E4558;
+  --mono: 'JetBrains Mono', 'Courier New', monospace;
+  --sans: 'Inter', -apple-system, sans-serif;
+  --ease: cubic-bezier(0.4,0,0.2,1);
+}
 
-    /* ===========================
-       RESET & BASE
-    =========================== */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
-    body {
-      background-color: var(--bg-base);
-      color: var(--text-primary);
-      font-family: var(--sans);
-      line-height: 1.65;
-      -webkit-font-smoothing: antialiased;
-    }
-    a { color: inherit; text-decoration: none; }
-    ul { list-style: none; }
-    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+/* ============================================================
+   RESET
+============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{
+  background:var(--bg);
+  color:var(--tx1);
+  font-family:var(--sans);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+button{cursor:pointer;font-family:inherit;border:none;background:none}
+::selection{background:rgba(0,255,136,.18);color:var(--tx1)}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border-hi);border-radius:2px}
 
-    /* ===========================
-       LAYOUT
-    =========================== */
-    .container {
-      width: 100%;
-      max-width: 1160px;
-      margin: 0 auto;
-      padding: 0 28px;
-    }
-    .section-gap { padding: 100px 0; }
+/* ============================================================
+   NAV  (fixed, always on top)
+============================================================ */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:56px;
+  display:flex;align-items:center;
+  background:rgba(8,12,20,.92);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid transparent;
+  transition:border-color .25s var(--ease);
+}
+#nav.scrolled{border-color:var(--border)}
+.nav-inner{
+  width:100%;max-width:1280px;
+  margin:0 auto;padding:0 32px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.nav-logo{
+  font-family:var(--mono);font-size:.88rem;font-weight:600;
+  color:var(--accent);letter-spacing:.02em;
+}
+.nav-logo span{color:var(--tx2)}
+.nav-links{display:flex;gap:28px}
+.nav-links a{
+  font-family:var(--mono);font-size:.72rem;
+  color:var(--tx2);letter-spacing:.08em;
+  text-transform:lowercase;
+  position:relative;
+  transition:color .2s var(--ease);
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-3px;left:0;right:0;
+  height:1px;background:var(--accent);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .2s var(--ease);
+}
+.nav-links a:hover{color:var(--accent)}
+.nav-links a:hover::after{transform:scaleX(1)}
 
-    /* ===========================
-       SCROLLBAR
-    =========================== */
-    ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: var(--bg-base); }
-    ::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 3px; }
+/* progress bar */
+#nav-progress{
+  position:absolute;bottom:0;left:0;
+  height:1px;background:var(--accent);width:0;
+  transition:width .1s linear;
+}
 
-    /* ===========================
-       NAV
-    =========================== */
-    #nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      height: 58px;
-      display: flex;
-      align-items: center;
-      background: rgba(10, 14, 24, 0.90);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid transparent;
-      transition: border-color var(--transition);
-    }
-    #nav.scrolled { border-color: var(--border); }
-    .nav-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-    }
-    .nav-logo {
-      font-family: var(--mono);
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--accent);
-      letter-spacing: 0.02em;
-    }
-    .nav-logo span { color: var(--text-secondary); }
-    .nav-links {
-      display: flex;
-      gap: 30px;
-    }
-    .nav-links a {
-      font-family: var(--mono);
-      font-size: 0.73rem;
-      color: var(--text-secondary);
-      letter-spacing: 0.08em;
-      text-transform: lowercase;
-      transition: color var(--transition);
-      position: relative;
-    }
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -2px; left: 0; right: 0;
-      height: 1px;
-      background: var(--accent);
-      transform: scaleX(0);
-      transition: transform var(--transition);
-      transform-origin: left;
-    }
-    .nav-links a:hover { color: var(--accent); }
-    .nav-links a:hover::after { transform: scaleX(1); }
+/* ============================================================
+   OUTER SCROLL CONTAINER  (vertical scroll-snap)
+============================================================ */
+#scroll-root{
+  height:100vh;
+  overflow-y:scroll;
+  scroll-snap-type:y mandatory;
+  scroll-behavior:smooth;
+}
+/* all direct sections snap */
+#scroll-root > section{
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+}
 
-    /* ===========================
-       HERO
-    =========================== */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding-top: 58px;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-grid-bg {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(var(--border) 1px, transparent 1px),
-        linear-gradient(90deg, var(--border) 1px, transparent 1px);
-      background-size: 55px 55px;
-      opacity: 0.22;
-      mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%);
-    }
-    .hero-glow {
-      position: absolute;
-      width: 700px; height: 700px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,255,136,0.07) 0%, transparent 70%);
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-    }
-    .hero-content { position: relative; z-index: 1; }
-    .hero-eyebrow {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--accent);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      margin-bottom: 22px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .hero-eyebrow::before {
-      content: '';
-      display: block;
-      width: 28px; height: 1px;
-      background: var(--accent);
-    }
-    .hero-headline {
-      font-size: clamp(2rem, 5vw, 3.4rem);
-      font-weight: 700;
-      line-height: 1.18;
-      letter-spacing: -0.025em;
-      margin-bottom: 28px;
-      color: var(--text-primary);
-      font-family: var(--sans);
-    }
-    .hero-headline em {
-      font-style: normal;
-      color: var(--accent);
-    }
-    .hero-body {
-      max-width: 580px;
-      font-size: 1rem;
-      color: var(--text-secondary);
-      line-height: 1.85;
-      margin-bottom: 42px;
-    }
-    .hero-body strong { color: var(--text-primary); font-weight: 500; }
-    .hero-cta-row {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 11px 24px;
-      background: var(--accent);
-      color: #000;
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      font-weight: 700;
-      border-radius: var(--radius-sm);
-      letter-spacing: 0.04em;
-      transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
-    }
-    .btn-primary:hover {
-      opacity: 0.90;
-      transform: translateY(-1px);
-      box-shadow: 0 0 20px rgba(0,255,136,0.3);
-    }
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 11px 24px;
-      border: 1px solid var(--border-bright);
-      color: var(--text-secondary);
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      border-radius: var(--radius-sm);
-      letter-spacing: 0.04em;
-      transition: border-color var(--transition), color var(--transition), transform var(--transition);
-    }
-    .btn-secondary:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      transform: translateY(-1px);
-    }
-    .hero-stats {
-      margin-top: 68px;
-      display: flex;
-      gap: 44px;
-      flex-wrap: wrap;
-    }
-    .stat-item { display: flex; flex-direction: column; gap: 4px; }
-    .stat-num {
-      font-family: var(--mono);
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--accent);
-      line-height: 1;
-    }
-    .stat-label { font-size: 0.74rem; color: var(--text-muted); letter-spacing: 0.04em; }
-    .stat-divider { width: 1px; background: var(--border); align-self: stretch; }
+/* ============================================================
+   HERO  (100vh)
+============================================================ */
+#hero{
+  min-height:100vh;
+  display:flex;align-items:center;
+  padding-top:56px;
+  position:relative;overflow:hidden;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(var(--border) 1px,transparent 1px),
+    linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:56px 56px;
+  opacity:.22;
+  mask-image:radial-gradient(ellipse 80% 70% at 50% 50%,black 30%,transparent 100%);
+}
+.hero-glow{
+  position:absolute;width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,255,136,.07) 0%,transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;
+}
+.hero-content{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 32px;width:100%}
+.hero-eyebrow{
+  font-family:var(--mono);font-size:.72rem;color:var(--accent);
+  letter-spacing:.14em;text-transform:uppercase;
+  margin-bottom:24px;display:flex;align-items:center;gap:12px;
+}
+.hero-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--accent)}
+.hero-headline{
+  font-size:clamp(2.2rem,5.5vw,4rem);font-weight:700;
+  line-height:1.15;letter-spacing:-.03em;margin-bottom:28px;
+}
+.hero-headline em{font-style:normal;color:var(--accent)}
+.hero-body{
+  max-width:560px;font-size:1rem;color:var(--tx2);
+  line-height:1.85;margin-bottom:44px;
+}
+.hero-body strong{color:var(--tx1);font-weight:500}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 26px;background:var(--accent);color:#000;
+  font-family:var(--mono);font-size:.78rem;font-weight:700;
+  border-radius:4px;letter-spacing:.04em;
+  transition:opacity .2s,transform .2s,box-shadow .2s;
+}
+.btn-primary:hover{opacity:.88;transform:translateY(-1px);box-shadow:0 0 22px rgba(0,255,136,.3)}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 26px;border:1px solid var(--border-hi);color:var(--tx2);
+  font-family:var(--mono);font-size:.78rem;border-radius:4px;letter-spacing:.04em;
+  transition:border-color .2s,color .2s,transform .2s;
+}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+.hero-stats{
+  margin-top:72px;display:flex;gap:48px;flex-wrap:wrap;align-items:center;
+}
+.stat-item{display:flex;flex-direction:column;gap:4px}
+.stat-num{font-family:var(--mono);font-size:2.1rem;font-weight:700;color:var(--accent);line-height:1}
+.stat-label{font-size:.72rem;color:var(--tx3);letter-spacing:.05em}
+.stat-div{width:1px;background:var(--border-mid);align-self:stretch}
 
-    /* ===========================
-       SECTION HEADER
-    =========================== */
-    .section-header { margin-bottom: 52px; }
-    .section-label {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--accent);
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-    .section-title {
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--text-primary);
-    }
+/* ============================================================
+   ABOUT  (100vh)
+============================================================ */
+#about{
+  min-height:100vh;
+  display:flex;align-items:center;
+  background:var(--bg-raised);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.about-wrap{
+  max-width:1280px;margin:0 auto;padding:0 32px;width:100%;
+  display:grid;grid-template-columns:1fr 1.5fr;gap:80px;align-items:center;
+}
+.sec-label{font-family:var(--mono);font-size:.68rem;color:var(--accent);letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px}
+.sec-title{font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;letter-spacing:-.025em}
+.about-left p{font-size:.92rem;color:var(--tx2);line-height:1.88;margin-top:18px}
+.about-left p strong{color:var(--tx1)}
+.skill-group{margin-bottom:20px}
+.skill-group-label{font-family:var(--mono);font-size:.66rem;color:var(--tx3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+.skill-row{display:flex;flex-wrap:wrap;gap:6px}
+.chip{
+  font-family:var(--mono);font-size:.68rem;padding:3px 10px;border-radius:20px;
+  border:1px solid var(--border-hi);color:var(--tx2);
+  background:rgba(255,255,255,.02);
+  transition:border-color .2s,color .2s,background .2s;
+}
+.chip:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-g2)}
+.chip.hi{border-color:var(--accent-dim);color:var(--accent);background:var(--accent-glow)}
 
-    /* ===========================
-       ABOUT / SKILLS
-    =========================== */
-    #about {
-      background: var(--bg-surface);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .about-inner {
-      display: grid;
-      grid-template-columns: 1fr 1.4fr;
-      gap: 60px;
-      align-items: center;
-    }
-    .about-left p {
-      font-size: 0.92rem;
-      color: var(--text-secondary);
-      line-height: 1.85;
-      margin-top: 20px;
-    }
-    .about-left p strong { color: var(--text-primary); }
-    .skills-group { margin-bottom: 22px; }
-    .skills-group-label {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      color: var(--text-muted);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    .skills-row { display: flex; flex-wrap: wrap; gap: 7px; }
-    .skill-chip {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      padding: 4px 11px;
-      border-radius: 20px;
-      border: 1px solid var(--border-bright);
-      color: var(--text-secondary);
-      background: rgba(255,255,255,0.02);
-      transition: border-color var(--transition), color var(--transition), background var(--transition);
-    }
-    .skill-chip:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: var(--accent-glow2);
-    }
-    .skill-chip.highlight {
-      border-color: var(--accent-dim);
-      color: var(--accent);
-      background: var(--accent-glow);
-    }
+/* ============================================================
+   PROJECT FULLSCREEN SECTIONS
+============================================================ */
+.project-fullscreen-section{
+  height:100vh;
+  display:flex;flex-direction:column;
+  position:relative;overflow:hidden;
+  background:var(--bg);
+}
 
-    /* ===========================
-       PROJECTS — 2-COLUMN STICKY LAYOUT
-    =========================== */
-    #projects { background: var(--bg-base); }
+/* top status bar */
+.proj-statusbar{
+  flex-shrink:0;
+  height:52px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 32px;
+  border-bottom:1px solid var(--border);
+  background:rgba(8,12,20,.95);
+  backdrop-filter:blur(12px);
+  z-index:10;
+}
+.statusbar-left{display:flex;align-items:center;gap:16px}
+.proj-index{font-family:var(--mono);font-size:.66rem;color:var(--tx3);letter-spacing:.12em}
+.proj-id{font-family:var(--mono);font-size:.72rem;color:var(--tx2);letter-spacing:.06em}
+.status-badge{
+  font-family:var(--mono);font-size:.6rem;padding:2px 8px;border-radius:20px;
+  font-weight:500;letter-spacing:.06em;
+}
+.sb-main    {background:rgba(0,255,136,.16);color:var(--accent);border:1px solid var(--accent-dim)}
+.sb-live    {background:rgba(0,255,136,.1);color:var(--accent)}
+.sb-wip     {background:var(--warn-bg);color:var(--warn)}
+.sb-team    {background:rgba(167,139,250,.12);color:var(--purple)}
+.sb-deployed{background:rgba(96,200,255,.1);color:var(--blue)}
 
-    .projects-layout {
-      display: grid;
-      grid-template-columns: var(--left-w) 1fr;
-      gap: 0;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      min-height: 600px;
-    }
+.statusbar-right{display:flex;align-items:center;gap:10px}
+.link-pill{
+  display:inline-flex;align-items:center;gap:5px;
+  font-family:var(--mono);font-size:.66rem;padding:4px 10px;
+  border-radius:4px;border:1px solid var(--border-hi);color:var(--tx3);
+  letter-spacing:.04em;
+  transition:border-color .2s,color .2s;
+}
+.link-pill:hover{border-color:var(--accent);color:var(--accent)}
 
-    /* ── LEFT: Card List ── */
-    .projects-left {
-      border-right: 1px solid var(--border);
-      background: var(--bg-surface);
-      overflow-y: auto;
-      max-height: calc(100vh - 100px);
-      position: sticky;
-      top: 80px;
-      align-self: start;
-    }
-    .projects-left::-webkit-scrollbar { width: 3px; }
-    .projects-left::-webkit-scrollbar-thumb { background: var(--border); }
+/* slide counter */
+.slide-counter{
+  font-family:var(--mono);font-size:.66rem;color:var(--tx3);letter-spacing:.08em;
+  padding:0 4px;
+}
+.slide-counter span{color:var(--accent)}
 
-    .left-header {
-      padding: 20px 22px 16px;
-      border-bottom: 1px solid var(--border);
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      color: var(--text-muted);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      background: var(--bg-card);
-    }
+/* ── Horizontal track ── */
+.project-horizontal-track{
+  flex:1;
+  display:flex;
+  overflow:hidden; /* JS controls transform */
+  min-height:0;
+}
+.project-slide{
+  flex-shrink:0;
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  padding:40px 80px 32px;
+  overflow-y:auto;
+}
+.project-slide::-webkit-scrollbar{width:3px}
+.project-slide::-webkit-scrollbar-thumb{background:var(--border-hi)}
 
-    .project-list-item {
-      padding: 20px 22px;
-      border-bottom: 1px solid var(--border);
-      cursor: pointer;
-      transition: background var(--transition), border-left-color var(--transition);
-      border-left: 3px solid transparent;
-      position: relative;
-    }
-    .project-list-item:last-child { border-bottom: none; }
-    .project-list-item:hover {
-      background: var(--bg-card-hover);
-    }
-    .project-list-item.active {
-      background: var(--bg-card);
-      border-left-color: var(--accent);
-    }
-    .project-list-item.active::after {
-      content: '';
-      position: absolute;
-      right: -1px; top: 50%;
-      transform: translateY(-50%);
-      width: 0; height: 0;
-      border-top: 8px solid transparent;
-      border-bottom: 8px solid transparent;
-      border-right: 8px solid var(--bg-detail);
-    }
+/* slide inner max-width */
+.slide-inner{
+  width:100%;max-width:960px;
+  display:flex;flex-direction:column;
+  gap:0;
+}
 
-    .list-item-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-    .list-item-index {
-      font-family: var(--mono);
-      font-size: 0.62rem;
-      color: var(--text-muted);
-      letter-spacing: 0.1em;
-    }
-    .list-item-status {
-      display: inline-block;
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      padding: 2px 7px;
-      border-radius: 20px;
-      letter-spacing: 0.06em;
-      font-weight: 500;
-    }
-    .badge-live   { background: rgba(0,255,136,0.12); color: var(--accent); }
-    .badge-wip    { background: rgba(255,180,0,0.12);  color: #FFC53D; }
-    .badge-team   { background: rgba(130,80,255,0.12); color: #A78BFA; }
-    .badge-main   { background: rgba(0,255,136,0.18);  color: var(--accent); border: 1px solid var(--accent-dim); }
-    .badge-deployed { background: rgba(0,180,255,0.12); color: #60C8FF; }
+/* ── Slide navigation ── */
+.slide-nav{
+  flex-shrink:0;
+  height:56px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 32px;
+  border-top:1px solid var(--border);
+  background:rgba(8,12,20,.95);
+}
+.slide-nav-left,.slide-nav-right{display:flex;align-items:center;gap:12px}
 
-    .list-item-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 6px;
-      letter-spacing: -0.01em;
-    }
-    .project-list-item.active .list-item-title { color: var(--accent); }
+.nav-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--mono);font-size:.72rem;
+  padding:7px 16px;border-radius:4px;
+  border:1px solid var(--border-hi);color:var(--tx2);
+  letter-spacing:.04em;
+  transition:border-color .2s,color .2s,background .2s,opacity .2s;
+}
+.nav-btn:hover:not(:disabled){border-color:var(--accent);color:var(--accent);background:var(--accent-g2)}
+.nav-btn:disabled{opacity:.25;cursor:not-allowed}
+.nav-btn.primary{background:var(--accent);color:#000;border-color:var(--accent);font-weight:700}
+.nav-btn.primary:hover:not(:disabled){opacity:.85;box-shadow:0 0 16px rgba(0,255,136,.25)}
 
-    .list-item-sub {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-      line-height: 1.5;
-      margin-bottom: 10px;
-    }
+/* dot indicators */
+.slide-dots{display:flex;gap:8px;align-items:center}
+.dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--border-hi);
+  transition:background .2s,transform .2s;
+}
+.dot.active{background:var(--accent);transform:scale(1.3)}
 
-    .list-item-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-    }
-    .mini-badge {
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      padding: 2px 7px;
-      border-radius: var(--radius-sm);
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      letter-spacing: 0.02em;
-      transition: border-color var(--transition), color var(--transition);
-    }
-    .project-list-item.active .mini-badge {
-      border-color: var(--accent-dim);
-      color: var(--text-secondary);
-    }
+/* section progress bar */
+.section-progress{
+  position:absolute;bottom:0;left:0;height:2px;
+  background:var(--accent);opacity:.7;
+  transition:width .35s var(--ease);
+}
 
-    /* ── RIGHT: Detail Panel ── */
-    .projects-right {
-      background: var(--bg-detail);
-      min-height: 600px;
-      overflow-y: auto;
-    }
+/* ── vertical position indicator (right side) ── */
+.proj-section-nav{
+  position:absolute;right:20px;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:8px;z-index:20;
+}
+/* removed — using dot tabs instead */
 
-    .detail-panel {
-      display: none;
-      padding: 32px 36px 40px;
-      animation: fadeIn 0.28s ease;
-    }
-    .detail-panel.active { display: block; }
+/* ============================================================
+   SLIDE CONTENT COMPONENTS
+============================================================ */
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateX(12px); }
-      to   { opacity: 1; transform: translateX(0); }
-    }
+/* Slide 1 – Title + Stack + Key Points */
+.slide-title-block{margin-bottom:32px}
+.slide-proj-en{
+  font-family:var(--mono);font-size:.72rem;color:var(--accent);
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px;
+}
+.slide-proj-name{
+  font-size:clamp(2rem,4.5vw,3.2rem);font-weight:700;
+  letter-spacing:-.03em;line-height:1.15;margin-bottom:8px;
+}
+.slide-proj-desc{
+  font-size:.95rem;color:var(--tx2);line-height:1.75;
+  max-width:680px;margin-bottom:20px;
+}
+.stack-row{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:32px}
+.stack-tag{
+  font-family:var(--mono);font-size:.68rem;padding:4px 11px;border-radius:4px;
+  background:rgba(255,255,255,.04);border:1px solid var(--border-hi);color:var(--tx2);
+  letter-spacing:.03em;
+}
 
-    .detail-header {
-      margin-bottom: 28px;
-      padding-bottom: 22px;
-      border-bottom: 1px solid var(--border);
-    }
-    .detail-proj-index {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      color: var(--text-muted);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .detail-title {
-      font-size: clamp(1.6rem, 3vw, 2.4rem);
-      font-weight: 700;
-      letter-spacing: -0.025em;
-      color: var(--text-primary);
-      margin-bottom: 10px;
-      font-family: var(--sans);
-    }
-    .detail-title-en {
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      color: var(--accent);
-      letter-spacing: 0.06em;
-      margin-bottom: 12px;
-    }
-    .detail-desc {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      line-height: 1.75;
-      max-width: 600px;
-    }
-    .detail-link-row {
-      display: flex;
-      gap: 10px;
-      margin-top: 18px;
-      flex-wrap: wrap;
-    }
-    .link-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      padding: 6px 14px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-bright);
-      color: var(--text-muted);
-      letter-spacing: 0.04em;
-      transition: border-color var(--transition), color var(--transition), background var(--transition);
-    }
-    .link-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: var(--accent-glow2);
-    }
+.kep-heading{
+  font-family:var(--mono);font-size:.7rem;color:var(--accent);
+  letter-spacing:.14em;text-transform:uppercase;
+  margin-bottom:14px;display:flex;align-items:center;gap:10px;
+}
+.kep-heading::after{content:'';flex:1;height:1px;background:var(--border-mid)}
+.kep-list{display:flex;flex-direction:column;gap:10px}
+.kep-item{
+  display:flex;gap:12px;
+  font-size:.88rem;color:var(--tx2);line-height:1.65;
+}
+.kep-item::before{
+  content:'→';color:var(--accent);flex-shrink:0;
+  font-family:var(--mono);font-size:.82rem;margin-top:1px;
+}
+.kep-item strong{color:var(--tx1);font-weight:500}
+.kep-item code{
+  font-family:var(--mono);font-size:.78rem;
+  color:var(--accent);background:var(--accent-glow);
+  padding:1px 5px;border-radius:3px;
+}
 
-    /* detail sections */
-    .detail-sections {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .detail-section {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 22px 24px;
-    }
-    .ds-label {
-      font-family: var(--mono);
-      font-size: 0.66rem;
-      color: var(--accent);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .ds-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
+/* Slide 2 – Troubleshooting */
+.ts-header{margin-bottom:28px}
+.ts-badge{
+  display:inline-block;font-family:var(--mono);font-size:.66rem;
+  padding:3px 10px;border-radius:20px;letter-spacing:.08em;
+  background:var(--danger-bg);color:var(--danger);
+  border:1px solid rgba(255,77,106,.3);margin-bottom:12px;
+}
+.ts-title{
+  font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:700;
+  letter-spacing:-.025em;line-height:1.2;margin-bottom:8px;
+}
+.ts-subtitle{font-size:.9rem;color:var(--tx2)}
 
-    .detail-list {
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-    }
-    .detail-list li {
-      display: flex;
-      gap: 10px;
-      font-size: 0.84rem;
-      color: var(--text-secondary);
-      line-height: 1.65;
-    }
-    .detail-list li::before {
-      content: '→';
-      color: var(--accent);
-      flex-shrink: 0;
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      margin-top: 1px;
-    }
-    .detail-list li strong { color: var(--text-primary); font-weight: 500; }
-    .detail-list li code {
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      color: var(--accent);
-      background: var(--accent-glow);
-      padding: 1px 5px;
-      border-radius: 3px;
-    }
+.ts-cards{display:flex;flex-direction:column;gap:12px}
+.ts-card{
+  border-radius:6px;padding:16px 20px;
+  font-family:var(--mono);font-size:.8rem;line-height:1.7;
+}
+.ts-card-label{
+  font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;
+  opacity:.65;margin-bottom:6px;display:flex;align-items:center;gap:8px;
+}
+.ts-card-label::after{content:'';flex:1;height:1px;background:currentColor;opacity:.2}
+.ts-card-body{line-height:1.72}
+.ts-card-body code{
+  background:rgba(0,0,0,.35);padding:1px 6px;border-radius:3px;font-size:.76rem;
+}
+.ts-cause {background:var(--danger-bg);border-left:3px solid var(--danger);color:#FFA0B0}
+.ts-fix   {background:var(--success-bg);border-left:3px solid var(--accent);color:#7DFFD6}
+.ts-result{background:rgba(255,255,255,.025);border-left:3px solid var(--border-hi);color:var(--tx2)}
 
-    /* troubleshooting diff */
-    .ts-block { display: flex; flex-direction: column; gap: 10px; }
-    .ts-row {
-      border-radius: var(--radius-sm);
-      padding: 14px 16px;
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      line-height: 1.65;
-    }
-    .ts-row-cause {
-      background: var(--danger-dim);
-      border-left: 3px solid var(--danger);
-      color: #FFA0B0;
-    }
-    .ts-row-fix {
-      background: var(--success-dim);
-      border-left: 3px solid var(--accent);
-      color: #7DFFD6;
-    }
-    .ts-row-result {
-      background: rgba(255,255,255,0.025);
-      border-left: 3px solid var(--border-bright);
-      color: var(--text-secondary);
-    }
-    .ts-row-label {
-      font-size: 0.62rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      opacity: 0.65;
-      margin-bottom: 5px;
-    }
-    .ts-row code {
-      background: rgba(0,0,0,0.3);
-      padding: 1px 5px;
-      border-radius: 3px;
-    }
+/* Slide 3 – Next Step */
+.ns-header{margin-bottom:28px}
+.ns-badge{
+  display:inline-block;font-family:var(--mono);font-size:.66rem;
+  padding:3px 10px;border-radius:20px;letter-spacing:.08em;
+  background:var(--accent-glow);color:var(--accent);
+  border:1px solid var(--accent-dim);margin-bottom:12px;
+}
+.ns-title{
+  font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:700;
+  letter-spacing:-.025em;line-height:1.2;margin-bottom:8px;
+}
+.ns-subtitle{font-size:.9rem;color:var(--tx2)}
 
-    /* next step */
-    .nextstep-list { display: flex; flex-direction: column; gap: 9px; }
-    .nextstep-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 0.83rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-    .nextstep-item::before {
-      content: '◈';
-      color: var(--accent);
-      flex-shrink: 0;
-      font-size: 0.65rem;
-      margin-top: 4px;
-      font-family: var(--mono);
-    }
+.ns-items{display:flex;flex-direction:column;gap:14px}
+.ns-item{
+  display:flex;gap:16px;align-items:flex-start;
+  padding:16px 20px;border-radius:6px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.02);
+  transition:border-color .2s,background .2s;
+}
+.ns-item:hover{border-color:var(--border-hi);background:rgba(0,255,136,.03)}
+.ns-num{
+  font-family:var(--mono);font-size:.7rem;color:var(--accent);
+  flex-shrink:0;width:24px;line-height:1.6;
+}
+.ns-item-body{font-size:.88rem;color:var(--tx2);line-height:1.65}
+.ns-item-body strong{color:var(--tx1);font-weight:500}
 
-    /* placeholder when nothing selected */
-    .detail-placeholder {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      min-height: 500px;
-      gap: 16px;
-      color: var(--text-muted);
-    }
-    .detail-placeholder .ph-icon {
-      font-size: 2.4rem;
-      opacity: 0.3;
-    }
-    .detail-placeholder p {
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
-    }
+/* slide 1 – no-ts fallback */
+.no-ts{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  height:100%;gap:16px;color:var(--tx3);text-align:center;
+}
+.no-ts .icon{font-size:2.5rem;opacity:.3}
+.no-ts p{font-family:var(--mono);font-size:.78rem;letter-spacing:.06em}
 
-    /* ===========================
-       CONTACT
-    =========================== */
-    #contact { text-align: center; }
-    .contact-headline {
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 16px;
-    }
-    .contact-sub {
-      font-size: 1rem;
-      color: var(--text-secondary);
-      margin-bottom: 40px;
-    }
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-    .contact-link-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 26px;
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-bright);
-      color: var(--text-secondary);
-      letter-spacing: 0.04em;
-      transition: all var(--transition);
-    }
-    .contact-link-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      transform: translateY(-2px);
-      background: var(--accent-glow2);
-    }
-    .contact-link-btn.primary-contact {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #000;
-      font-weight: 700;
-    }
-    .contact-link-btn.primary-contact:hover {
-      opacity: 0.85; color: #000;
-      box-shadow: 0 0 24px rgba(0,255,136,0.25);
-    }
+/* ============================================================
+   CONTACT  (100vh)
+============================================================ */
+#contact{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;
+  background:var(--bg);
+  border-top:1px solid var(--border);
+}
+.contact-inner{max-width:600px;padding:0 32px}
+.contact-headline{
+  font-size:clamp(2rem,5vw,3.4rem);font-weight:700;
+  letter-spacing:-.03em;margin-bottom:16px;line-height:1.2;
+}
+.contact-headline em{font-style:normal;color:var(--accent)}
+.contact-sub{font-size:.98rem;color:var(--tx2);margin-bottom:44px;line-height:1.75}
+.contact-links{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.cta-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 28px;background:var(--accent);color:#000;
+  font-family:var(--mono);font-size:.78rem;font-weight:700;
+  border-radius:4px;letter-spacing:.04em;
+  transition:opacity .2s,transform .2s,box-shadow .2s;
+}
+.cta-primary:hover{opacity:.88;transform:translateY(-1px);box-shadow:0 0 22px rgba(0,255,136,.25)}
+.cta-ghost{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 28px;border:1px solid var(--border-hi);color:var(--tx2);
+  font-family:var(--mono);font-size:.78rem;border-radius:4px;letter-spacing:.04em;
+  transition:border-color .2s,color .2s,transform .2s;
+}
+.cta-ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
 
-    /* ===========================
-       FOOTER
-    =========================== */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 26px 0;
-      text-align: center;
-    }
-    footer p {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      letter-spacing: 0.04em;
-    }
-    footer span { color: var(--accent); }
+/* ============================================================
+   FOOTER
+============================================================ */
+footer{
+  border-top:1px solid var(--border);padding:24px;text-align:center;
+}
+footer p{font-family:var(--mono);font-size:.68rem;color:var(--tx3);letter-spacing:.04em}
+footer span{color:var(--accent)}
 
-    /* ===========================
-       CURSOR BLINK
-    =========================== */
-    .cursor {
-      display: inline-block;
-      width: 2px; height: 1em;
-      background: var(--accent);
-      vertical-align: middle;
-      margin-left: 2px;
-      animation: blink 1s step-end infinite;
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
+/* ============================================================
+   GLOBAL SECTION DOTS (right-side vertical nav)
+============================================================ */
+#section-dots{
+  position:fixed;right:24px;top:50%;transform:translateY(-50%);
+  z-index:150;
+  display:flex;flex-direction:column;gap:10px;
+}
+.sdot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--border-hi);border:none;padding:0;
+  transition:background .2s,transform .2s;
+  cursor:pointer;
+}
+.sdot.active{background:var(--accent);transform:scale(1.4)}
+.sdot:hover{background:var(--tx2)}
 
-    /* ===========================
-       SCROLL REVEAL
-    =========================== */
-    .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+/* ============================================================
+   REVEAL ANIMATION
+============================================================ */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.reveal.vis{opacity:1;transform:translateY(0)}
 
-    /* ===========================
-       RESPONSIVE
-    =========================== */
-    @media (max-width: 860px) {
-      :root { --left-w: 280px; }
-    }
-    @media (max-width: 680px) {
-      .projects-layout {
-        grid-template-columns: 1fr;
-        border-radius: var(--radius-md);
-      }
-      .projects-left {
-        position: static;
-        max-height: none;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-      }
-      .project-list-item.active::after { display: none; }
-      .about-inner { grid-template-columns: 1fr; gap: 36px; }
-      .hero-stats { gap: 22px; }
-      .stat-divider { display: none; }
-      .nav-links { gap: 18px; }
-      .detail-panel { padding: 24px 22px 32px; }
-    }
-    @media (max-width: 400px) {
-      .nav-links a { font-size: 0.68rem; }
-    }
-
-    ::selection {
-      background: rgba(0, 255, 136, 0.18);
-      color: var(--text-primary);
-    }
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media(max-width:900px){
+  .about-wrap{grid-template-columns:1fr;gap:44px}
+  .project-slide{padding:28px 24px 28px}
+}
+@media(max-width:640px){
+  .hero-stats{gap:24px}
+  .stat-div{display:none}
+  .nav-links{gap:16px}
+  .proj-statusbar{padding:0 16px}
+  .slide-nav{padding:0 16px}
+  #section-dots{display:none}
+  .project-slide{padding:20px 16px}
+}
   </style>
 </head>
 <body>
 
-  <!-- =====================
-       NAV
-  ===================== -->
-  <nav id="nav">
-    <div class="container nav-inner">
-      <a href="#hero" class="nav-logo">jisu.dev<span>▋</span></a>
-      <ul class="nav-links">
-        <li><a href="#about">introduce</a></li>
-        <li><a href="#projects">projects</a></li>
-        <li><a href="#contact">contact</a></li>
-      </ul>
-    </div>
-  </nav>
+<!-- ===================== NAV ===================== -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">jisu.dev<span>▋</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">introduce</a></li>
+      <li><a href="#project-duoingsu">projects</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </div>
+  <div id="nav-progress"></div>
+</nav>
 
-  <!-- =====================
-       HERO
-  ===================== -->
-  <section id="hero">
-    <div class="hero-grid-bg"></div>
-    <div class="hero-glow"></div>
-    <div class="container hero-content">
-      <div class="hero-eyebrow">Junior Fullstack Developer</div>
-      <h1 class="hero-headline">
-        비즈니스 의도를<br/>
-        <em>견고한 아키텍처</em>로<br/>
-        증명하는 개발자
-      </h1>
-      <p class="hero-body">
-        뷰티 도메인의 팀 리더로 <strong>현장 페인 포인트를 집요하게 분석하는 습관</strong>이 몸에 밴 개발자입니다.<br/>
-        기획 의도를 명확한 데이터 흐름으로 번역하고, API 설계부터 서버리스 인프라까지
-        직접 구축하며 제품을 완성합니다.
+<!-- ===================== SECTION DOTS ===================== -->
+<div id="section-dots">
+  <!-- injected by JS -->
+</div>
+
+<!-- ===================== SCROLL ROOT ===================== -->
+<div id="scroll-root">
+
+<!-- ─────────────────── HERO ─────────────────── -->
+<section id="hero" data-section="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Junior Fullstack Developer</div>
+    <h1 class="hero-headline">
+      비즈니스 의도를<br/>
+      <em>견고한 아키텍처</em>로<br/>
+      증명하는 개발자
+    </h1>
+    <p class="hero-body">
+      뷰티 도메인의 팀 리더로 <strong>현장 페인 포인트를 집요하게 분석하는 습관</strong>이 몸에 밴 개발자입니다.<br/>
+      기획 의도를 명확한 데이터 흐름으로 번역하고, API 설계부터 서버리스 인프라까지
+      직접 구축하며 제품을 완성합니다.
+    </p>
+    <div class="hero-ctas">
+      <a href="#project-duoingsu" class="btn-primary">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        projects 보기
+      </a>
+      <a href="#contact" class="btn-ghost">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M2 4h12v9H2V4zm0 0l6 5 6-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        contact
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><span class="stat-num">5</span><span class="stat-label">Projects Built</span></div>
+      <div class="stat-div"></div>
+      <div class="stat-item"><span class="stat-num">3</span><span class="stat-label">Team Projects</span></div>
+      <div class="stat-div"></div>
+      <div class="stat-item"><span class="stat-num">1</span><span class="stat-label">Live Service</span></div>
+      <div class="stat-div"></div>
+      <div class="stat-item"><span class="stat-num">0</span><span class="stat-label">Infra Cost (CF free tier)</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── ABOUT ─────────────────── -->
+<section id="about" data-section="about">
+  <div class="about-wrap">
+    <div class="about-left reveal">
+      <div class="sec-label">// introduce</div>
+      <h2 class="sec-title">페인 포인트를<br/>코드로 해결합니다</h2>
+      <p>
+        뷰티 업계에서 팀을 이끌며 <strong>현장의 비효율을 발견하고 개선안을 직접 만드는 것</strong>이
+        제 일상이었습니다. 개발자로 전향한 지금도 그 습관은 그대로입니다.
+        주변의 실제 문제를 먼저 정의하고, 아키텍처를 설계한 뒤, 직접 구현합니다.
       </p>
-      <div class="hero-cta-row">
-        <a href="#projects" class="btn-primary">
-          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          projects 보기
-        </a>
-        <a href="#contact" class="btn-secondary">
-          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M2 4h12v9H2V4zm0 0l6 5 6-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          contact
-        </a>
+      <p style="margin-top:14px">
+        <strong>셋로그</strong>에서 영감을 얻어 파트너와 함께 만드는 학습 기록 앱 <strong>듀오잉수</strong>가
+        그 결과입니다. 기획 PRD v4, Cloudflare 무비용 서버리스 스택, Web Push 인프라까지
+        풀스택으로 완성했습니다.
+      </p>
+    </div>
+    <div class="about-right reveal">
+      <div class="skill-group">
+        <div class="skill-group-label">Frontend</div>
+        <div class="skill-row">
+          <span class="chip hi">React</span>
+          <span class="chip hi">Next.js (App Router)</span>
+          <span class="chip">React Native / Expo</span>
+          <span class="chip">HTML5 · CSS3</span>
+          <span class="chip">JavaScript ES6+</span>
+        </div>
       </div>
-      <div class="hero-stats">
-        <div class="stat-item">
-          <span class="stat-num">5</span>
-          <span class="stat-label">Projects Built</span>
+      <div class="skill-group">
+        <div class="skill-group-label">Backend & Infra</div>
+        <div class="skill-row">
+          <span class="chip hi">Cloudflare Workers</span>
+          <span class="chip hi">Hono</span>
+          <span class="chip">D1 · Drizzle ORM</span>
+          <span class="chip">Firebase Auth</span>
+          <span class="chip">Node.js · Express</span>
+          <span class="chip">Turborepo</span>
         </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-          <span class="stat-num">3</span>
-          <span class="stat-label">Team Projects</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-          <span class="stat-num">1</span>
-          <span class="stat-label">Live Service</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-          <span class="stat-num">0</span>
-          <span class="stat-label">Infra Cost (CF free tier)</span>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-label">Dev & Collaboration</div>
+        <div class="skill-row">
+          <span class="chip">Git · GitHub</span>
+          <span class="chip">Web Push · PWA</span>
+          <span class="chip">REST API 설계</span>
+          <span class="chip">Mock API · JSON Schema</span>
+          <span class="chip">Figma</span>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- =====================
-       ABOUT / INTRODUCE
-  ===================== -->
-  <section id="about" class="section-gap">
-    <div class="container about-inner">
-      <div class="about-left reveal">
-        <div class="section-label">// introduce</div>
-        <h2 class="section-title" style="margin-top:12px;">페인 포인트를<br/>코드로 해결합니다</h2>
-        <p>
-          뷰티 업계에서 팀을 이끌며 <strong>현장의 비효율을 발견하고 개선안을 직접 만드는 것</strong>이 제 일상이었습니다.
-          개발자로 전향한 지금도 그 습관은 그대로입니다. 주변의 실제 문제를 먼저 정의하고, 아키텍처를 설계한 뒤, 직접 구현합니다.
-        </p>
-        <p>
-          <strong>셋로그</strong>에서 영감을 얻어 파트너와 함께 만드는 학습 기록 앱 <strong>듀오잉수</strong>가
-          그 결과입니다. 기획 PRD v4, Cloudflare 무비용 서버리스 스택, Web Push 인프라까지 풀스택으로 완성했습니다.
-        </p>
-      </div>
-      <div class="about-right reveal">
-        <div class="skills-group">
-          <div class="skills-group-label">Frontend</div>
-          <div class="skills-row">
-            <span class="skill-chip highlight">React</span>
-            <span class="skill-chip highlight">Next.js (App Router)</span>
-            <span class="skill-chip">React Native / Expo</span>
-            <span class="skill-chip">HTML5 · CSS3</span>
-            <span class="skill-chip">JavaScript ES6+</span>
+<!-- ═══════════════════════════════════════════════
+     PROJECT 01 — 듀오잉수
+═══════════════════════════════════════════════ -->
+<section class="project-fullscreen-section" id="project-duoingsu" data-section="project-duoingsu">
+  <div class="proj-statusbar">
+    <div class="statusbar-left">
+      <span class="proj-index">PROJECT_01</span>
+      <span class="proj-id">duoingsu.app</span>
+      <span class="status-badge sb-main">⬡ MAIN</span>
+    </div>
+    <div class="statusbar-right">
+      <span class="slide-counter">slide <span class="cur">1</span> / 3</span>
+      <a href="#" class="link-pill">
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+      <a href="#" class="link-pill">↗ Live</a>
+    </div>
+  </div>
+
+  <div class="project-horizontal-track">
+
+    <!-- SLIDE 1 -->
+    <div class="project-slide">
+      <div class="slide-inner">
+        <div class="slide-title-block">
+          <div class="slide-proj-en">PROJECT_01 · Fullstack · Learning Log App</div>
+          <h2 class="slide-proj-name">듀오잉수 <span style="color:var(--tx2);font-size:60%">(duoingsu)</span></h2>
+          <p class="slide-proj-desc">기획부터 인프라 구축, 네이티브 웹 기술 제어까지 풀스택으로 완성한 메인 프로젝트. Turborepo Monorepo + Cloudflare 무비용 서버리스 스택.</p>
+          <div class="stack-row">
+            <span class="stack-tag">Next.js</span>
+            <span class="stack-tag">Turborepo</span>
+            <span class="stack-tag">CF Workers</span>
+            <span class="stack-tag">D1 DB</span>
+            <span class="stack-tag">Drizzle ORM</span>
+            <span class="stack-tag">Web Push API</span>
+            <span class="stack-tag">Firebase Auth</span>
           </div>
         </div>
-        <div class="skills-group">
-          <div class="skills-group-label">Backend & Infra</div>
-          <div class="skills-row">
-            <span class="skill-chip highlight">Cloudflare Workers</span>
-            <span class="skill-chip highlight">Hono</span>
-            <span class="skill-chip">D1 · Drizzle ORM</span>
-            <span class="skill-chip">Firebase Auth</span>
-            <span class="skill-chip">Node.js · Express</span>
-            <span class="skill-chip">Turborepo</span>
+        <div class="kep-heading">🛠 Key Engineering Points</div>
+        <ul class="kep-list">
+          <li class="kep-item"><span>Turborepo 기반 Monorepo 구조 설계 — <code>apps/web</code>, <code>packages/shared</code> 분리</span></li>
+          <li class="kep-item"><span>Cloudflare Pages + Workers + D1 + R2 <strong>무비용 고가용성 서버리스 스택</strong> 구축</span></li>
+          <li class="kep-item"><span><strong>logical_date 알고리즘</strong> — 오전 6시 기준 데이터 마감 제어로 데이터 무결성 확보</span></li>
+          <li class="kep-item"><span>VAPID 암호화 + Service Worker 기반 <strong>독립형 웹 푸시 인프라</strong> 구축</span></li>
+          <li class="kep-item"><span>Firebase Auth 화이트리스트 2인 구조로 접근 제어</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SLIDE 2 -->
+    <div class="project-slide">
+      <div class="slide-inner">
+        <div class="ts-header">
+          <div class="ts-badge">🚨 TROUBLESHOOTING</div>
+          <h3 class="ts-title">Android VAPID Key<br/>파싱 오류 해결</h3>
+          <p class="ts-subtitle">Web Push 구독 실패 — Android Chromium 크로스브라우징 이슈</p>
+        </div>
+        <div class="ts-cards">
+          <div class="ts-card ts-cause">
+            <div class="ts-card-label">⚠ 원인 (CAUSE)</div>
+            <div class="ts-card-body">Android 환경에서 VAPID Public Key를 Base64 문자열 그대로 전달 시 브라우저 내부 파싱 오류로 Web Push 구독 실패.<br/>iOS와 달리 Android Chromium이 <code>Uint8Array</code> 바이너리 배열을 엄격하게 요구.</div>
+          </div>
+          <div class="ts-card ts-fix">
+            <div class="ts-card-label">✓ 해결 (FIX)</div>
+            <div class="ts-card-body">Base64 URL-safe 문자열 → <code>Uint8Array</code> 변환 유틸 함수를 직접 구현하여 <code>applicationServerKey</code> 인자로 주입.<br/><code>urlBase64ToUint8Array(publicKey)</code> 함수를 <code>packages/shared</code>에 등록하여 재사용 구조 확보.</div>
+          </div>
+          <div class="ts-card ts-result">
+            <div class="ts-card-label">◎ 결과 (RESULT)</div>
+            <div class="ts-card-body">Android / iOS / Desktop 크로스 브라우징 Web Push 구독 정상 동작 확인.<br/>shared 유틸로 추출하여 이후 다른 플랫폼 확장 시 코드 중복 없이 재사용 가능한 구조 확보.</div>
           </div>
         </div>
-        <div class="skills-group">
-          <div class="skills-group-label">Dev & Collaboration</div>
-          <div class="skills-row">
-            <span class="skill-chip">Git · GitHub</span>
-            <span class="skill-chip">Web Push · PWA</span>
-            <span class="skill-chip">REST API 설계</span>
-            <span class="skill-chip">Mock API · JSON Schema</span>
-            <span class="skill-chip">Figma</span>
+      </div>
+    </div>
+
+    <!-- SLIDE 3 -->
+    <div class="project-slide">
+      <div class="slide-inner">
+        <div class="ns-header">
+          <div class="ns-badge">📝 NEXT STEP</div>
+          <h3 class="ns-title">회고 &amp; 개선 계획</h3>
+          <p class="ns-subtitle">운영하며 발견한 다음 과제들</p>
+        </div>
+        <div class="ns-items">
+          <div class="ns-item"><div class="ns-num">01</div><div class="ns-item-body"><strong>스트릭(Streak) 시각화 대시보드</strong><br/>연속 기록 현황을 달력 히트맵 형태로 표현하여 학습 동기 강화</div></div>
+          <div class="ns-item"><div class="ns-num">02</div><div class="ns-item-body"><strong>다중 이모지 반응 컴포넌트 최적화</strong><br/>터치 액션 연속 입력 시 렌더링 딜레이 개선 — 터치 이벤트 디바운싱 도입</div></div>
+          <div class="ns-item"><div class="ns-num">03</div><div class="ns-item-body"><strong>30초 폴링 → WebSocket 전환 검토</strong><br/>실시간 학습 동기화 지연 개선. 서버리스 환경에서의 WebSocket 대안(Durable Objects) 아키텍처 분석 중</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /track -->
+
+  <div class="slide-nav">
+    <div class="slide-nav-left">
+      <button class="nav-btn prev-btn" disabled>← prev</button>
+    </div>
+    <div class="slide-dots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+    <div class="slide-nav-right">
+      <button class="nav-btn next-btn primary">next →</button>
+    </div>
+  </div>
+  <div class="section-progress" style="width:33.33%"></div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     PROJECT 02 — 탔시유
+═══════════════════════════════════════════════ -->
+<section class="project-fullscreen-section" id="project-tacu" data-section="project-tacu">
+  <div class="proj-statusbar">
+    <div class="statusbar-left">
+      <span class="proj-index">PROJECT_02</span>
+      <span class="proj-id">ta-cu.app</span>
+      <span class="status-badge sb-team">◈ TEAM</span>
+    </div>
+    <div class="statusbar-right">
+      <span class="slide-counter">slide <span class="cur">1</span> / 3</span>
+      <a href="#" class="link-pill">
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+
+  <div class="project-horizontal-track">
+    <div class="project-slide">
+      <div class="slide-inner">
+        <div class="slide-title-block">
+          <div class="slide-proj-en">PROJECT_02 · React Native · Team Collab</div>
+          <h2 class="slide-proj-name">탔시유 <span style="color:var(--tx2);font-size:60%">(TA-CU)</span></h2>
+          <p class="slide-proj-desc">대전시 공공 자전거 API와 GPS 기반 맵 라이브러리를 연동하고, 브랜치 전략으로 팀 협업을 이끈 프로젝트.</p>
+          <div class="stack-row">
+            <span class="stack-tag">React Native</span>
+            <span class="stack-tag">Expo</span>
+            <span class="stack-tag">CF Workers</span>
+            <span class="stack-tag">Firebase Auth</span>
+            <span class="stack-tag">Git Branch Strategy</span>
+          </div>
+        </div>
+        <div class="kep-heading">🛠 Key Engineering Points</div>
+        <ul class="kep-list">
+          <li class="kep-item"><span>Expo 내 맵 컴포넌트 스크롤 간섭 이슈 직접 해결 (제스처 핸들러 분리)</span></li>
+          <li class="kep-item"><span>공통 상수 관리 파일(<code>apiConstants.js</code>) 머지 충돌 중재 및 해결 주도</span></li>
+          <li class="kep-item"><span><strong>커밋 컨벤션 제안 및 브랜치 전략 문서화</strong>로 팀 생산성 향상</span></li>
+          <li class="kep-item"><span>Firebase Auth + AsyncStorage <code>getReactNativePersistence</code> 통합</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="project-slide">
+      <div class="slide-inner">
+        <div class="ts-header">
+          <div class="ts-badge">🚨 TROUBLESHOOTING</div>
+          <h3 class="ts-title">Cloudflare Tunnel<br/>SSL/TLS 프로토콜 누락</h3>
+          <p class="ts-subtitle">API 통신 전체가 침묵하며 실패 — 환경변수 URL 파싱 문제</p>
+        </div>
+        <div class="ts-cards">
+          <div class="ts-card ts-cause">
+            <div class="ts-card-label">⚠ 원인 (CAUSE)</div>
+            <div class="ts-card-body">Cloudflare Tunnel 배포 환경에서 환경변수에 저장된 API 엔드포인트 주소에 <code>https://</code> 프로토콜이 누락됨.<br/>TLS 인증 메커니즘이 강제 적용된 CF Tunnel의 특성상 일반 HTTP 요청을 거부하여 API 통신 전체가 침묵하며 실패.</div>
+          </div>
+          <div class="ts-card ts-fix">
+            <div class="ts-card-label">✓ 해결 (FIX)</div>
+            <div class="ts-card-body">Network 탭과 서버 로그를 교차 분석하여 요청 자체가 브라우저 단에서 차단됨을 확인.<br/>환경변수 URL 앞에 <code>https://</code> 명시 후, Tunnel 재시작 시마다 주소 갱신이 필요한 구조적 문제를 팀 공유 문서로 기록하여 온보딩 비용 제거.</div>
+          </div>
+          <div class="ts-card ts-result">
+            <div class="ts-card-label">◎ 결과 (RESULT)</div>
+            <div class="ts-card-body">API 통신 정상화. 이후 팀 전원이 같은 실수를 반복하지 않도록 체크리스트 문서화 — 디버깅 경험을 팀 자산으로 전환.</div>
           </div>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- =====================
-       PROJECTS — 2-COLUMN STICKY LAYOUT
-  ===================== -->
-  <section id="projects" class="section-gap">
-    <div class="container">
-      <div class="section-header reveal">
-        <div class="section-label">// projects</div>
-        <h2 class="section-title">좌측 카드를 클릭해<br/>상세 구현 내용을 확인하세요</h2>
-      </div>
-
-      <div class="projects-layout reveal">
-
-        <!-- ── LEFT PANEL ── -->
-        <div class="projects-left">
-          <div class="left-header">projects_list.json</div>
-
-          <!-- Item 1 -->
-          <div class="project-list-item active" data-proj="0">
-            <div class="list-item-top">
-              <span class="list-item-index">PROJECT_01</span>
-              <span class="list-item-status badge-main">⬡ MAIN</span>
-            </div>
-            <div class="list-item-title">듀오잉수</div>
-            <div class="list-item-sub">풀스택 메인 프로젝트 — 기획부터 인프라까지</div>
-            <div class="list-item-badges">
-              <span class="mini-badge">Next.js</span>
-              <span class="mini-badge">CF Workers</span>
-              <span class="mini-badge">D1 DB</span>
-              <span class="mini-badge">Web Push</span>
-            </div>
-          </div>
-
-          <!-- Item 2 -->
-          <div class="project-list-item" data-proj="1">
-            <div class="list-item-top">
-              <span class="list-item-index">PROJECT_02</span>
-              <span class="list-item-status badge-team">◈ TEAM</span>
-            </div>
-            <div class="list-item-title">탔시유 (TA-CU)</div>
-            <div class="list-item-sub">GPS 기반 공공 자전거 앱 — 팀 협업 리드</div>
-            <div class="list-item-badges">
-              <span class="mini-badge">React Native</span>
-              <span class="mini-badge">Expo</span>
-              <span class="mini-badge">Firebase</span>
-            </div>
-          </div>
-
-          <!-- Item 3 -->
-          <div class="project-list-item" data-proj="2">
-            <div class="list-item-top">
-              <span class="list-item-index">PROJECT_03</span>
-              <span class="list-item-status badge-live">▸ LIVE</span>
-            </div>
-            <div class="list-item-title">세븐틴 제대 카운트다운</div>
-            <div class="list-item-sub">실 유저 운영 중 — 요구사항 발견 & 지속 리팩토링</div>
-            <div class="list-item-badges">
-              <span class="mini-badge">React</span>
-              <span class="mini-badge">YouTube API</span>
-              <span class="mini-badge">CSS</span>
-            </div>
-          </div>
-
-          <!-- Item 4 -->
-          <div class="project-list-item" data-proj="3">
-            <div class="list-item-top">
-              <span class="list-item-index">PROJECT_04</span>
-              <span class="list-item-status badge-wip">◐ WIP</span>
-            </div>
-            <div class="list-item-title">엄마의 월급 계산기</div>
-            <div class="list-item-sub">도메인 분석 + 수식 모듈화 아키텍처</div>
-            <div class="list-item-badges">
-              <span class="mini-badge">React Native</span>
-              <span class="mini-badge">Expo</span>
-              <span class="mini-badge">Figma</span>
-            </div>
-          </div>
-
-          <!-- Item 5 -->
-          <div class="project-list-item" data-proj="4">
-            <div class="list-item-top">
-              <span class="list-item-index">PROJECT_05</span>
-              <span class="list-item-status badge-deployed">▸ DEPLOYED</span>
-            </div>
-            <div class="list-item-title">Poke상성 도감</div>
-            <div class="list-item-sub">외부 오픈 데이터 재가공 + 상성 알고리즘 설계</div>
-            <div class="list-item-badges">
-              <span class="mini-badge">HTML5</span>
-              <span class="mini-badge">JavaScript</span>
-              <span class="mini-badge">PokeAPI</span>
-            </div>
-          </div>
-
-        </div><!-- /projects-left -->
-
-        <!-- ── RIGHT PANEL ── -->
-        <div class="projects-right">
-
-          <!-- Detail 0: 듀오잉수 -->
-          <div class="detail-panel active" data-detail="0">
-            <div class="detail-header">
-              <div class="detail-proj-index">PROJECT_01 · MAIN</div>
-              <h3 class="detail-title">듀오잉수</h3>
-              <div class="detail-title-en">duoingsu — Learning Together Log App</div>
-              <p class="detail-desc">기획부터 인프라 구축, 네이티브 웹 기술 제어까지 풀스택으로 완성한 메인 프로젝트. Turborepo Monorepo + Cloudflare 무비용 서버리스 스택 + Web Push 인프라.</p>
-              <div class="detail-link-row">
-                <a href="#" class="link-btn">
-                  <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                  GitHub
-                </a>
-                <a href="#" class="link-btn">
-                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M8 2a6 6 0 100 12A6 6 0 008 2zm0 1.5a4.5 4.5 0 110 9 4.5 4.5 0 010-9zM7 5v4l3 1.5.5-.87L8 8.3V5H7z" fill="currentColor"/></svg>
-                  Live Demo
-                </a>
-              </div>
-            </div>
-
-            <div class="detail-sections">
-              <div class="detail-section">
-                <div class="ds-label">🛠 Key Engineering Points</div>
-                <ul class="detail-list">
-                  <li><span>Turborepo 기반 Monorepo 구조 설계 — <code>apps/web</code>, <code>packages/shared</code> 분리</span></li>
-                  <li><span>Cloudflare Pages + Workers + D1 + R2 무비용 고가용성 서버리스 스택 구축</span></li>
-                  <li><span><strong>logical_date 알고리즘</strong> — 오전 6시 기준 데이터 마감 제어로 데이터 무결성 확보</span></li>
-                  <li><span>VAPID 암호화 + Service Worker 기반 독립형 웹 푸시 인프라 구축</span></li>
-                  <li><span>Firebase Auth 화이트리스트 2인 구조로 접근 제어</span></li>
-                </ul>
-              </div>
-
-              <div class="detail-section">
-                <div class="ds-label">🚨 Troubleshooting — Android VAPID Key 파싱 오류</div>
-                <div class="ts-block">
-                  <div class="ts-row ts-row-cause">
-                    <div class="ts-row-label">⚠ 원인 (CAUSE)</div>
-                    Android 환경에서 VAPID Public Key를 Base64 문자열 그대로 전달 시 브라우저 내부 파싱 오류로 Web Push 구독 실패. iOS와 달리 Android Chromium이 Uint8Array 바이너리 배열을 엄격하게 요구.
-                  </div>
-                  <div class="ts-row ts-row-fix">
-                    <div class="ts-row-label">✓ 해결 (FIX)</div>
-                    Base64 URL-safe 문자열 → Uint8Array 변환 유틸 함수를 직접 구현하여 applicationServerKey 인자로 주입. <code>urlBase64ToUint8Array(publicKey)</code> 함수를 shared 패키지에 등록하여 재사용.
-                  </div>
-                  <div class="ts-row ts-row-result">
-                    <div class="ts-row-label">◎ 결과 (RESULT)</div>
-                    Android / iOS / Desktop 크로스 브라우징 Web Push 구독 정상 동작 확인. shared 유틸로 추출하여 이후 다른 플랫폼 확장 시 코드 중복 없이 재사용 가능한 구조 확보.
-                  </div>
-                </div>
-              </div>
-
-              <div class="detail-section">
-                <div class="ds-label">📝 Next Step</div>
-                <div class="nextstep-list">
-                  <div class="nextstep-item">연속 기록 스트릭(Streak) 시각화 대시보드</div>
-                  <div class="nextstep-item">다중 이모지 반응 컴포넌트 터치 액션 최적화</div>
-                  <div class="nextstep-item">30초 폴링 → WebSocket 실시간 동기화 전환 검토</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Detail 1: 탔시유 -->
-          <div class="detail-panel" data-detail="1">
-            <div class="detail-header">
-              <div class="detail-proj-index">PROJECT_02 · TEAM</div>
-              <h3 class="detail-title">탔시유 (TA-CU)</h3>
-              <div class="detail-title-en">ta-cu — Daejeon Public Bike Tracker App</div>
-              <p class="detail-desc">대전시 공공 자전거 API와 GPS 기반 맵 라이브러리를 연동하고, 브랜치 전략으로 팀 협업을 이끈 프로젝트.</p>
-              <div class="detail-link-row">
-                <a href="#" class="link-btn">
-                  <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                  GitHub
-                </a>
-              </div>
-            </div>
-
-            <div class="detail-sections">
-              <div class="detail-section">
-                <div class="ds-label">🛠 Key Engineering Points</div>
-                <ul class="detail-list">
-                  <li><span>Expo 내 맵 컴포넌트 스크롤 간섭 이슈 직접 해결 (제스처 핸들러 분리)</span></li>
-                  <li><span>공통 상수 관리 파일(<code>apiConstants.js</code>) 머지 충돌 중재 및 해결 주도</span></li>
-                  <li><span>커밋 컨벤션 제안 및 브랜치 전략 문서화로 팀 생산성 향상</span></li>
-                  <li><span>Firebase Auth + AsyncStorage <code>getReactNativePersistence</code> 통합</span></li>
-                </ul>
-              </div>
-
-              <div class="detail-section">
-                <div class="ds-label">🚨 Troubleshooting — Cloudflare Tunnel SSL/TLS 프로토콜 누락</div>
-                <div class="ts-block">
-                  <div class="ts-row ts-row-cause">
-                    <div class="ts-row-label">⚠ 원인 (CAUSE)</div>
-                    Cloudflare Tunnel 배포 환경에서 환경변수에 저장된 API 엔드포인트 주소에 <code>https://</code> 프로토콜이 누락됨. TLS 인증 메커니즘이 강제 적용된 CF Tunnel의 특성상 일반 HTTP 요청을 거부하여 API 통신 전체가 침묵하며 실패.
-                  </div>
-                  <div class="ts-row ts-row-fix">
-                    <div class="ts-row-label">✓ 해결 (FIX)</div>
-                    Network 탭과 서버 로그를 교차 분석하여 요청 자체가 브라우저 단에서 차단됨을 확인. 환경변수 URL 앞에 <code>https://</code> 명시 후, Tunnel 재시작 시마다 주소 갱신이 필요한 구조적 문제를 팀 공유 문서로 기록하여 온보딩 비용 제거.
-                  </div>
-                  <div class="ts-row ts-row-result">
-                    <div class="ts-row-label">◎ 결과 (RESULT)</div>
-                    API 통신 정상화. 이후 팀 전원이 같은 실수를 반복하지 않도록 체크리스트 문서화 — 디버깅 경험을 팀 자산으로 전환.
-                  </div>
-                </div>
-              </div>
-
-              <div class="detail-section">
-                <div class="ds-label">📝 Next Step</div>
-                <div class="nextstep-list">
-                  <div class="nextstep-item">Redis 인메모리 활용 실시간 집계 아키텍처</div>
-                  <div class="nextstep-item">GPS 어뷰징 방지 — 평균 속도/거리 역산 미들웨어 도입</div>
-                  <div class="nextstep-item">Tashu API 실시간 스테이션 재고 반영 고도화</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Detail 2: 세븐틴 -->
-          <div class="detail-panel" data-detail="2">
-            <div class="detail-header">
-              <div class="detail-proj-index">PROJECT_03 · LIVE SERVICE</div>
-              <h3 class="detail-title">세븐틴 제대 카운트다운</h3>
-              <div class="detail-title-en">seventeen-countdown — Fan Service, Currently Live</div>
-              <p class="detail-desc">실제 유저가 사용 중인 서비스를 운영하며 요구사항을 발견하고 지속적으로 리팩토링하는 경험.</p>
-              <div class="detail-link-row">
-                <a href="#" class="link-btn">
-                  <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                  GitHub
-                </a>
-                <a href="#" class="link-btn">
-                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M3 3h10v10H3V3zm7-2v2M6 1v2M1 6h2M1 10h2M13 6h2M13 10h2M6 13v2M10 13v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                  Live
-                </a>
-              </div>
-            </div>
-
-            <div class="detail-sections">
-              <div class="detail-section">
-                <div class="ds-label">🛠 Key Engineering Points</div>
-                <ul class="detail-list">
-                  <li><span>실시간 타이머 훅 및 YouTube Embed API 미디어 연동 링크 트리 구조 설계</span></li>
-                  <li><span><code>packages/shared/style.css</code> 공통 스타일시트 도입 — 파편화된 스타일 리팩토링</span></li>
-                  <li><span>공통 훅(<code>useCountdown</code>) 분리로 다른 멤버 카운트다운에 재사용 가능한 구조 확보</span></li>
-                  <li><span>실제 유저 반응을 기반으로 UGC 실시간 응원방 기능 업그레이드 진행 중</span></li>
-                </ul>
-              </div>
-
-              <div class="detail-section">
-                <div class="ds-label">📝 서비스 운영 인사이트</div>
-                <div class="nextstep-list">
-                  <div class="nextstep-item">배포 후 유저 요청으로 멤버별 개별 카운트다운 기능 추가</div>
-                  <div class="nextstep-item">링크 클릭률 분석으로 UI 배치 우선순위 재조정</div>
-                  <div class="nextstep-item">실시간 응원방(UGC) — Web Push 연동 기능 개발 중</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Detail 3: 엄마의 월급 계산기 -->
-          <div class="detail-panel" data-detail="3">
-            <div class="detail-header">
-              <div class="detail-proj-index">PROJECT_04 · WIP</div>
-              <h3 class="detail-title">엄마의 월급 계산기</h3>
-              <div class="detail-title-en">salary-calculator — Shift Work Pay Engine</div>
-              <p class="detail-desc">주변의 실제 문제를 해결하기 위해 도메인 분석과 수식 모듈화 아키텍처를 설계하는 과정.</p>
-              <div class="detail-link-row">
-                <a href="#" class="link-btn">
-                  <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                  GitHub
-                </a>
-              </div>
-            </div>
-
-            <div class="detail-sections">
-              <div class="detail-section">
-                <div class="ds-label">🛠 기획 및 설계 역량</div>
-                <ul class="detail-list">
-                  <li><span>시중 계산기의 한계 분석 — <strong>교대 근무 / 변동 주휴수당</strong>을 반영하지 못하는 구조적 문제 도출</span></li>
-                  <li><span>커스텀 근무 세팅 UI 레이아웃 Figma 설계 완료</span></li>
-                  <li><span>급여 계산 수식을 컴포넌트와 분리한 <strong>독립 급여 계산 모듈 엔진</strong> 아키텍처 설계</span></li>
-                </ul>
-              </div>
-
-              <div class="detail-section">
-                <div class="ds-label">📝 Next Step</div>
-                <div class="nextstep-list">
-                  <div class="nextstep-item">수식 연산 모듈 단위 테스트 작성</div>
-                  <div class="nextstep-item">교대 패턴 프리셋(2조 2교대, 3조 3교대) 저장 기능</div>
-                  <div class="nextstep-item">Expo EAS Build 앱 스토어 배포</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Detail 4: Poke상성 도감 -->
-          <div class="detail-panel" data-detail="4">
-            <div class="detail-header">
-              <div class="detail-proj-index">PROJECT_05 · DEPLOYED</div>
-              <h3 class="detail-title">Poke상성 도감</h3>
-              <div class="detail-title-en">poke-type — Type Matchup Algorithm & Mock API</div>
-              <p class="detail-desc">복잡한 외부 오픈 데이터를 재가공하고 다중 상성 알고리즘과 Mock API 구조를 직접 설계하며 기본기를 다진 프로젝트.</p>
-              <div class="detail-link-row">
-                <a href="#" class="link-btn">
-                  <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                  GitHub
-                </a>
-                <a href="#" class="link-btn">
-                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M3 3h10v10H3V3zm7-2v2M6 1v2M1 6h2M1 10h2M13 6h2M13 10h2M6 13v2M10 13v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                  Live
-                </a>
-              </div>
-            </div>
-
-            <div class="detail-sections">
-              <div class="detail-section">
-                <div class="ds-label">🛠 Key Engineering Points</div>
-                <ul class="detail-list">
-                  <li><span>개발 착수 전 <strong>상세 워크플로우(흐름도) 선제 설계</strong> — 예외 처리 분기 미리 확보</span></li>
-                  <li><span>이중 속성 조합 상성 배수 연산 알고리즘 직접 구현</span></li>
-                  <li><span>외부 API 미제공 데이터를 위한 <strong>정형화된 Mock API JSON 스키마</strong> 설계 및 바인딩</span></li>
-                  <li><span>Cloudflare Pages 정적 배포로 무비용 CDN 서빙</span></li>
-                </ul>
-              </div>
-
-              <div class="detail-section">
-                <div class="ds-label">📝 Next Step</div>
-                <div class="nextstep-list">
-                  <div class="nextstep-item">static JSON → Cloudflare Workers + D1 DB 마이그레이션</div>
-                  <div class="nextstep-item">커스텀 포켓몬 CRUD 생성 기능으로 고도화</div>
-                  <div class="nextstep-item">Serverless 환경의 완전한 REST API 구조로 전환</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div><!-- /projects-right -->
-      </div><!-- /projects-layout -->
-    </div>
-  </section>
-
-  <!-- =====================
-       CONTACT
-  ===================== -->
-  <section id="contact" class="section-gap">
-    <div class="container reveal">
-      <div class="section-label" style="text-align:center; margin-bottom:20px;">// contact</div>
-      <h2 class="contact-headline">함께 만들어볼 준비가 되어 있습니다.</h2>
-      <p class="contact-sub">기술적인 문제를 같이 풀어나갈 팀을 찾고 있습니다.</p>
-      <div class="contact-links">
-        <a href="mailto:your@email.com" class="contact-link-btn primary-contact">
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 4h12v9H2V4zm0 0l6 5 6-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          이메일 보내기
-        </a>
-        <a href="https://github.com/" target="_blank" rel="noopener" class="contact-link-btn">
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-          GitHub
-        </a>
-        <a href="#" class="contact-link-btn">
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="3" stroke="currentColor" stroke-width="1.6"/><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.5"/><circle cx="11.5" cy="4.5" r="0.7" fill="currentColor"/></svg>
-          Blog / Notion
-        </a>
+    <div class="project-slide">
+      <div class="slide-inner">
+        <div class="ns-header">
+          <div class="ns-badge">📝 NEXT STEP</div>
+          <h3 class="ns-title">회고 &amp; 개선 계획</h3>
+          <p class="ns-subtitle">팀 프로젝트 이후 발견한 아키텍처 과제들</p>
+        </div>
+        <div class="ns-items">
+          <div class="ns-item"><div class="ns-num">01</div><div class="ns-item-body"><strong>Redis 인메모리 활용 실시간 집계 아키텍처</strong><br/>현재 요청마다 DB 풀스캔하는 구조 → Redis 캐시 레이어 도입으로 레이턴시 개선</div></div>
+          <div class="ns-item"><div class="ns-num">02</div><div class="ns-item-body"><strong>GPS 어뷰징 방지 미들웨어</strong><br/>평균 속도 / 거리 역산으로 비정상 이동 감지 — 검증 로직을 Worker 미들웨어로 분리</div></div>
+          <div class="ns-item"><div class="ns-num">03</div><div class="ns-item-body"><strong>Tashu API 실시간 스테이션 재고 반영 고도화</strong><br/>현재 폴링 방식 → 웹훅 또는 SSE 전환으로 자전거 재고 정보 실시간화</div></div>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- =====================
-       FOOTER
-  ===================== -->
-  <footer>
-    <div class="container">
-      <p>Built with <span>♥</span> by <span>jisu</span> · © 2025 · Designed & Developed in Daejeon, KR</p>
+  <div class="slide-nav">
+    <div class="slide-nav-left"><button class="nav-btn prev-btn" disabled>← prev</button></div>
+    <div class="slide-dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div></div>
+    <div class="slide-nav-right"><button class="nav-btn next-btn primary">next →</button></div>
+  </div>
+  <div class="section-progress" style="width:33.33%"></div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     PROJECT 03 — 세븐틴 카운트다운
+═══════════════════════════════════════════════ -->
+<section class="project-fullscreen-section" id="project-seventeen" data-section="project-seventeen">
+  <div class="proj-statusbar">
+    <div class="statusbar-left">
+      <span class="proj-index">PROJECT_03</span>
+      <span class="proj-id">svt-countdown.app</span>
+      <span class="status-badge sb-live">▸ LIVE</span>
     </div>
-  </footer>
+    <div class="statusbar-right">
+      <span class="slide-counter">slide <span class="cur">1</span> / 2</span>
+      <a href="#" class="link-pill">
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+      <a href="#" class="link-pill">↗ Live</a>
+    </div>
+  </div>
 
-  <!-- =====================
-       JAVASCRIPT
-  ===================== -->
-  <script>
-    // ─── Nav scroll style ────────────────────────────────────────
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 20);
-    }, { passive: true });
+  <div class="project-horizontal-track">
+    <div class="project-slide">
+      <div class="slide-inner">
+        <div class="slide-title-block">
+          <div class="slide-proj-en">PROJECT_03 · React · Live Fan Service</div>
+          <h2 class="slide-proj-name">세븐틴 제대<br/>카운트다운</h2>
+          <p class="slide-proj-desc">실제 유저가 사용 중인 서비스를 운영하며 요구사항을 발견하고 지속적으로 리팩토링하는 경험.</p>
+          <div class="stack-row">
+            <span class="stack-tag">React</span>
+            <span class="stack-tag">JavaScript</span>
+            <span class="stack-tag">CSS</span>
+            <span class="stack-tag">YouTube Embed API</span>
+          </div>
+        </div>
+        <div class="kep-heading">🛠 Key Engineering Points</div>
+        <ul class="kep-list">
+          <li class="kep-item"><span>실시간 타이머 훅 및 YouTube Embed API 미디어 연동 링크 트리 구조 설계</span></li>
+          <li class="kep-item"><span><code>packages/shared/style.css</code> 공통 스타일시트 도입 — 파편화된 스타일 리팩토링</span></li>
+          <li class="kep-item"><span>공통 훅(<code>useCountdown</code>) 분리로 다른 멤버 카운트다운에 <strong>재사용 가능한 구조</strong> 확보</span></li>
+          <li class="kep-item"><span>실제 유저 반응을 기반으로 UGC 실시간 응원방 기능 업그레이드 진행 중</span></li>
+        </ul>
+      </div>
+    </div>
 
-    // ─── Scroll reveal ───────────────────────────────────────────
-    const revealEls = document.querySelectorAll('.reveal');
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
-    revealEls.forEach(el => revealObserver.observe(el));
+    <div class="project-slide">
+      <div class="slide-inner">
+        <div class="ns-header">
+          <div class="ns-badge">📝 서비스 운영 인사이트</div>
+          <h3 class="ns-title">유저 반응에서<br/>발견한 것들</h3>
+          <p class="ns-subtitle">라이브 서비스를 운영하며 배운 제품 개발의 현실</p>
+        </div>
+        <div class="ns-items">
+          <div class="ns-item"><div class="ns-num">01</div><div class="ns-item-body"><strong>배포 후 유저 요청으로 멤버별 개별 카운트다운 추가</strong><br/>기획 당시 예상하지 못했던 기능을 유저 피드백에서 발굴 — 실제 수요 기반 기능 설계의 중요성 체감</div></div>
+          <div class="ns-item"><div class="ns-num">02</div><div class="ns-item-body"><strong>링크 클릭률 분석으로 UI 배치 우선순위 재조정</strong><br/>사용 데이터를 기반으로 레이아웃 우선순위를 재조정한 첫 번째 경험</div></div>
+          <div class="ns-item"><div class="ns-num">03</div><div class="ns-item-body"><strong>실시간 응원방(UGC) Web Push 연동 개발 중</strong><br/>듀오잉수에서 확보한 VAPID 인프라를 재사용하여 팬 커뮤니티 기능 고도화 예정</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    // ─── Project 2-column panel switcher ─────────────────────────
-    const listItems  = document.querySelectorAll('.project-list-item');
-    const detailPanels = document.querySelectorAll('.detail-panel');
+  <div class="slide-nav">
+    <div class="slide-nav-left"><button class="nav-btn prev-btn" disabled>← prev</button></div>
+    <div class="slide-dots"><div class="dot active"></div><div class="dot"></div></div>
+    <div class="slide-nav-right"><button class="nav-btn next-btn primary">next →</button></div>
+  </div>
+  <div class="section-progress" style="width:50%"></div>
+</section>
 
-    listItems.forEach(item => {
-      item.addEventListener('click', () => {
-        const idx = item.dataset.proj;
+<!-- ═══════════════════════════════════════════════
+     PROJECT 04 — 엄마의 월급 계산기
+═══════════════════════════════════════════════ -->
+<section class="project-fullscreen-section" id="project-salary" data-section="project-salary">
+  <div class="proj-statusbar">
+    <div class="statusbar-left">
+      <span class="proj-index">PROJECT_04</span>
+      <span class="proj-id">salary-calc.app</span>
+      <span class="status-badge sb-wip">◐ WIP</span>
+    </div>
+    <div class="statusbar-right">
+      <span class="slide-counter">slide <span class="cur">1</span> / 2</span>
+      <a href="#" class="link-pill">
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
 
-        // Update left nav
-        listItems.forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
+  <div class="project-horizontal-track">
+    <div class="project-slide">
+      <div class="slide-inner">
+        <div class="slide-title-block">
+          <div class="slide-proj-en">PROJECT_04 · React Native · Domain Analysis</div>
+          <h2 class="slide-proj-name">엄마의<br/>월급 계산기</h2>
+          <p class="slide-proj-desc">주변의 실제 문제를 해결하기 위해 도메인 분석과 수식 모듈화 아키텍처를 설계하는 과정.</p>
+          <div class="stack-row">
+            <span class="stack-tag">React Native</span>
+            <span class="stack-tag">Expo</span>
+            <span class="stack-tag">Figma</span>
+          </div>
+        </div>
+        <div class="kep-heading">🛠 기획 및 설계 역량</div>
+        <ul class="kep-list">
+          <li class="kep-item"><span>시중 계산기의 한계 분석 — <strong>교대 근무 / 변동 주휴수당</strong>을 반영하지 못하는 구조적 문제 도출</span></li>
+          <li class="kep-item"><span>커스텀 근무 세팅 UI 레이아웃 Figma 설계 완료</span></li>
+          <li class="kep-item"><span>급여 계산 수식을 컴포넌트와 분리한 <strong>독립 급여 계산 모듈 엔진</strong> 아키텍처 설계</span></li>
+        </ul>
+      </div>
+    </div>
 
-        // Swap detail panel
-        detailPanels.forEach(p => p.classList.remove('active'));
-        const target = document.querySelector(`.detail-panel[data-detail="${idx}"]`);
-        if (target) target.classList.add('active');
+    <div class="project-slide">
+      <div class="slide-inner">
+        <div class="ns-header">
+          <div class="ns-badge">📝 NEXT STEP</div>
+          <h3 class="ns-title">배포를 향한<br/>다음 단계</h3>
+          <p class="ns-subtitle">앱 스토어 출시까지 남은 과제들</p>
+        </div>
+        <div class="ns-items">
+          <div class="ns-item"><div class="ns-num">01</div><div class="ns-item-body"><strong>수식 연산 모듈 단위 테스트 작성</strong><br/>급여 계산 엔진을 컴포넌트와 완전히 분리하여 Jest 단위 테스트 커버리지 확보</div></div>
+          <div class="ns-item"><div class="ns-num">02</div><div class="ns-item-body"><strong>교대 패턴 프리셋 저장 기능</strong><br/>2조 2교대, 3조 3교대 등 자주 쓰는 패턴을 AsyncStorage에 저장하여 반복 입력 제거</div></div>
+          <div class="ns-item"><div class="ns-num">03</div><div class="ns-item-body"><strong>Expo EAS Build 앱 스토어 배포</strong><br/>iOS / Android 동시 배포. TestFlight 베타 배포 후 실 사용자 피드백 수집 예정</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        // Scroll right panel to top
-        document.querySelector('.projects-right').scrollTop = 0;
-      });
-    });
+  <div class="slide-nav">
+    <div class="slide-nav-left"><button class="nav-btn prev-btn" disabled>← prev</button></div>
+    <div class="slide-dots"><div class="dot active"></div><div class="dot"></div></div>
+    <div class="slide-nav-right"><button class="nav-btn next-btn primary">next →</button></div>
+  </div>
+  <div class="section-progress" style="width:50%"></div>
+</section>
 
-    // ─── Keyboard navigation for list items ──────────────────────
-    listItems.forEach((item, i) => {
-      item.setAttribute('tabindex', '0');
-      item.setAttribute('role', 'button');
-      item.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          item.click();
-        }
-        if (e.key === 'ArrowDown' && listItems[i + 1]) listItems[i + 1].focus();
-        if (e.key === 'ArrowUp'   && listItems[i - 1]) listItems[i - 1].focus();
-      });
-    });
-  </script>
+<!-- ═══════════════════════════════════════════════
+     PROJECT 05 — Poke상성 도감
+═══════════════════════════════════════════════ -->
+<section class="project-fullscreen-section" id="project-poke" data-section="project-poke">
+  <div class="proj-statusbar">
+    <div class="statusbar-left">
+      <span class="proj-index">PROJECT_05</span>
+      <span class="proj-id">poke-type.app</span>
+      <span class="status-badge sb-deployed">▸ DEPLOYED</span>
+    </div>
+    <div class="statusbar-right">
+      <span class="slide-counter">slide <span class="cur">1</span> / 3</span>
+      <a href="#" class="link-pill">
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+      <a href="#" class="link-pill">↗ Live</a>
+    </div>
+  </div>
+
+  <div class="project-horizontal-track">
+    <div class="project-slide">
+      <div class="slide-inner">
+        <div class="slide-title-block">
+          <div class="slide-proj-en">PROJECT_05 · Vanilla JS · Algorithm Design</div>
+          <h2 class="slide-proj-name">Poke상성 도감</h2>
+          <p class="slide-proj-desc">복잡한 외부 오픈 데이터를 재가공하고 다중 상성 알고리즘과 Mock API 구조를 직접 설계하며 기본기를 다진 프로젝트.</p>
+          <div class="stack-row">
+            <span class="stack-tag">HTML5</span>
+            <span class="stack-tag">CSS3</span>
+            <span class="stack-tag">JavaScript</span>
+            <span class="stack-tag">PokeAPI</span>
+            <span class="stack-tag">CF Pages</span>
+          </div>
+        </div>
+        <div class="kep-heading">🛠 Key Engineering Points</div>
+        <ul class="kep-list">
+          <li class="kep-item"><span>개발 착수 전 <strong>상세 워크플로우(흐름도) 선제 설계</strong> — 예외 처리 분기 미리 확보</span></li>
+          <li class="kep-item"><span>이중 속성 조합 상성 배수 연산 알고리즘 직접 구현</span></li>
+          <li class="kep-item"><span>외부 API 미제공 데이터를 위한 <strong>정형화된 Mock API JSON 스키마</strong> 설계 및 바인딩</span></li>
+          <li class="kep-item"><span>Cloudflare Pages 정적 배포로 무비용 CDN 서빙</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="project-slide">
+      <div class="slide-inner">
+        <div class="ts-header">
+          <div class="ts-badge" style="background:rgba(96,200,255,.1);color:var(--blue);border-color:rgba(96,200,255,.3)">💡 ARCHITECTURE</div>
+          <h3 class="ts-title">Mock API &amp;<br/>알고리즘 설계</h3>
+          <p class="ts-subtitle">외부 API 의존성을 줄인 독립적 데이터 레이어 구축</p>
+        </div>
+        <div class="ts-cards">
+          <div class="ts-card" style="background:rgba(96,200,255,.06);border-left:3px solid var(--blue);color:#a8d8f0">
+            <div class="ts-card-label" style="color:var(--blue)">📐 설계 (DESIGN)</div>
+            <div class="ts-card-body">PokeAPI가 제공하지 않는 <strong>이중 속성 상성 테이블</strong>을 직접 정형화된 JSON 스키마로 설계. 외부 API 변경에 무관하게 독립적으로 동작하는 Mock API 레이어 구축.</div>
+          </div>
+          <div class="ts-card ts-fix">
+            <div class="ts-card-label">⚙ 알고리즘 (ALGORITHM)</div>
+            <div class="ts-card-body">포켓몬의 두 타입 조합 시 각 방어 타입 배수를 곱산하는 연산 로직 직접 구현.<br/>예: 풀+독 타입 vs 불 공격 = 2× (약점) × 1× = <code>최종 2배</code> 계산.</div>
+          </div>
+          <div class="ts-card ts-result">
+            <div class="ts-card-label">◎ 성과 (RESULT)</div>
+            <div class="ts-card-body">외부 API 없이 오프라인에서도 완전 동작하는 독립 데이터 레이어 확보. Cloudflare Pages 정적 배포로 무비용 CDN 서빙 중.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-slide">
+      <div class="slide-inner">
+        <div class="ns-header">
+          <div class="ns-badge">📝 NEXT STEP</div>
+          <h3 class="ns-title">서버리스 API로<br/>진화시키기</h3>
+          <p class="ns-subtitle">Static JSON에서 완전한 REST API 구조로의 전환</p>
+        </div>
+        <div class="ns-items">
+          <div class="ns-item"><div class="ns-num">01</div><div class="ns-item-body"><strong>static JSON → Cloudflare Workers + D1 DB 마이그레이션</strong><br/>현재 번들에 포함된 JSON 데이터를 D1 DB로 이전하여 동적 쿼리 가능 구조로 전환</div></div>
+          <div class="ns-item"><div class="ns-num">02</div><div class="ns-item-body"><strong>커스텀 포켓몬 CRUD 생성 기능</strong><br/>유저가 직접 커스텀 포켓몬을 추가할 수 있는 서버리스 API 엔드포인트 설계</div></div>
+          <div class="ns-item"><div class="ns-num">03</div><div class="ns-item-body"><strong>완전한 REST API 구조로 전환</strong><br/>Hono 기반 API 레이어를 분리하여 모바일 앱 등 다양한 클라이언트에서 재사용 가능한 구조 확보</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-nav">
+    <div class="slide-nav-left"><button class="nav-btn prev-btn" disabled>← prev</button></div>
+    <div class="slide-dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div></div>
+    <div class="slide-nav-right"><button class="nav-btn next-btn primary">next →</button></div>
+  </div>
+  <div class="section-progress" style="width:33.33%"></div>
+</section>
+
+<!-- ─────────────────── CONTACT ─────────────────── -->
+<section id="contact" data-section="contact">
+  <div class="contact-inner">
+    <div class="sec-label" style="text-align:center;margin-bottom:16px">// contact</div>
+    <h2 class="contact-headline">함께 만들어볼<br/><em>준비가 되어 있습니다.</em></h2>
+    <p class="contact-sub">기술적인 문제를 같이 풀어나갈 팀을 찾고 있습니다.<br/>이메일 혹은 GitHub으로 편하게 연락 주세요.</p>
+    <div class="contact-links">
+      <a href="mailto:your@email.com" class="cta-primary">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 4h12v9H2V4zm0 0l6 5 6-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        이메일 보내기
+      </a>
+      <a href="https://github.com/" target="_blank" rel="noopener" class="cta-ghost">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+      <a href="#" class="cta-ghost">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="3" stroke="currentColor" stroke-width="1.6"/><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.5"/><circle cx="11.5" cy="4.5" r="0.7" fill="currentColor"/></svg>
+        Blog / Notion
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer><div class="container" style="max-width:1280px;margin:0 auto;padding:0 32px">
+  <p>Built with <span>♥</span> by <span>jisu</span> · © 2025 · Designed & Developed in Daejeon, KR</p>
+</div></footer>
+
+</div><!-- /scroll-root -->
+
+<!-- ===================== JAVASCRIPT ===================== -->
+<script>
+/* ─────────────────────────────────────────────────────────
+   HORIZONTAL SLIDE ENGINE
+───────────────────────────────────────────────────────── */
+document.querySelectorAll('.project-fullscreen-section').forEach(section => {
+  const track    = section.querySelector('.project-horizontal-track');
+  const slides   = section.querySelectorAll('.project-slide');
+  const prevBtn  = section.querySelector('.prev-btn');
+  const nextBtn  = section.querySelector('.next-btn');
+  const dots     = section.querySelectorAll('.dot');
+  const counter  = section.querySelector('.slide-counter .cur');
+  const progress = section.querySelector('.section-progress');
+  const total    = slides.length;
+  let cur        = 0;
+
+  function goTo(idx) {
+    cur = Math.max(0, Math.min(idx, total - 1));
+    track.style.transform    = `translateX(-${cur * 100}%)`;
+    track.style.transition   = 'transform .45s cubic-bezier(0.4,0,0.2,1)';
+    dots.forEach((d, i)      => d.classList.toggle('active', i === cur));
+    if (counter) counter.textContent = cur + 1;
+    prevBtn.disabled  = cur === 0;
+    nextBtn.disabled  = cur === total - 1;
+    nextBtn.classList.toggle('primary', cur < total - 1);
+    if (progress) progress.style.width = `${((cur + 1) / total) * 100}%`;
+  }
+
+  prevBtn.addEventListener('click', () => goTo(cur - 1));
+  nextBtn.addEventListener('click', () => goTo(cur + 1));
+  dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+  goTo(0); // init
+
+  /* keyboard → / ← only when this section is the active snap target */
+  section._goTo = goTo;
+  section._getCur = () => cur;
+  section._getTotal = () => total;
+});
+
+/* ─────────────────────────────────────────────────────────
+   SCROLL ROOT: section tracking + nav + dots
+───────────────────────────────────────────────────────── */
+const scrollRoot   = document.getElementById('scroll-root');
+const sections     = [...scrollRoot.querySelectorAll('[data-section]')];
+const navEl        = document.getElementById('nav');
+const navProgress  = document.getElementById('nav-progress');
+const sectionDotWrap = document.getElementById('section-dots');
+
+/* build sidebar dots */
+sections.forEach((sec, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'sdot';
+  btn.title = sec.dataset.section;
+  btn.addEventListener('click', () => sec.scrollIntoView({ behavior: 'smooth' }));
+  sectionDotWrap.appendChild(btn);
+});
+const sdots = sectionDotWrap.querySelectorAll('.sdot');
+
+function getActiveSection() {
+  const mid = scrollRoot.scrollTop + scrollRoot.clientHeight / 2;
+  let best = 0;
+  sections.forEach((sec, i) => {
+    if (sec.offsetTop <= mid) best = i;
+  });
+  return best;
+}
+
+function onScroll() {
+  const st   = scrollRoot.scrollTop;
+  const full = scrollRoot.scrollHeight - scrollRoot.clientHeight;
+  navEl.classList.toggle('scrolled', st > 10);
+  if (navProgress) navProgress.style.width = `${(st / full) * 100}%`;
+
+  const active = getActiveSection();
+  sdots.forEach((d, i) => d.classList.toggle('active', i === active));
+}
+
+scrollRoot.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+/* keyboard left/right for active project slide */
+document.addEventListener('keydown', e => {
+  const active = getActiveSection();
+  const sec = sections[active];
+  if (!sec || !sec._goTo) return;
+  if (e.key === 'ArrowRight') sec._goTo(sec._getCur() + 1);
+  if (e.key === 'ArrowLeft')  sec._goTo(sec._getCur() - 1);
+});
+
+/* ─────────────────────────────────────────────────────────
+   REVEAL (about section inner elements)
+───────────────────────────────────────────────────────── */
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('vis'); revealObs.unobserve(e.target); }
+  });
+}, { root: scrollRoot, threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+</script>
 </body>
 </html>
