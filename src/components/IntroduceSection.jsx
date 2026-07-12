@@ -66,7 +66,9 @@ export default function IntroduceSection() {
         <div style={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '20px'
+          justifyContent: 'center',
+          gap: '20px',
+          paddingTop: '60px'
         }}>
           
           {/* Frontend Card */}

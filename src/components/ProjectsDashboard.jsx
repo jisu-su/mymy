@@ -45,7 +45,7 @@ export default function ProjectsDashboard() {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        paddingTop: '64px'
+        paddingTop: '32px'
       }}
     >
       <div className="container">
@@ -62,10 +62,10 @@ export default function ProjectsDashboard() {
             // PROJECTS
           </div>
           <h2 style={{
-            fontSize: '1.8rem',
-            fontWeight: '800',
-            color: 'var(--text-primary)',
-            letterSpacing: '-0.02em'
+            fontSize: '1.1rem',
+            fontWeight: '600',
+            color: 'var(--text-secondary)',
+            letterSpacing: '-0.01em'
           }}>
             좌측 프로젝트를 선택하여 상세 아키텍처 및 트러블슈팅을 확인하세요
           </h2>

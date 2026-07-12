@@ -28,12 +28,11 @@ export default function HeroSection() {
         position: 'relative'
       }}
     >
-      <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+      <div className="container project-grid-responsive" style={{ position: 'relative', zIndex: 2, display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '48px', alignItems: 'center' }}>
         <div style={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'flex-start',
-          maxWidth: '800px'
+          alignItems: 'flex-start'
         }}>
           {/* Eyebrow */}
           <div style={{
@@ -138,7 +137,6 @@ export default function HeroSection() {
             </button>
           </div>
 
-          {/* Stats Bar */}
           <div style={{
             display: 'flex',
             gap: '36px',
@@ -150,8 +148,7 @@ export default function HeroSection() {
             {[
               { num: '5', label: 'Projects Built' },
               { num: '3', label: 'Team Projects' },
-              { num: '1', label: 'Live Service' },
-              { num: '0원', label: 'Infra Cost (CF free tier)' }
+              { num: '1', label: 'Live Service' }
             ].map((stat, idx) => (
               <React.Fragment key={stat.label}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
@@ -168,7 +165,7 @@ export default function HeroSection() {
                     letterSpacing: '0.04em'
                   }}>{stat.label}</span>
                 </div>
-                {idx < 3 && (
+                {idx < 2 && (
                   <div style={{
                     width: '1px',
                     background: 'var(--border)',
@@ -180,6 +177,46 @@ export default function HeroSection() {
           </div>
 
         </div>
+
+        {/* Right Column: Profile Block */}
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '24px',
+          padding: '32px',
+          background: 'var(--bg-surface)',
+          border: '1px solid var(--border)',
+          borderRadius: 'var(--radius-lg)'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--bg-card)', border: '2px solid var(--accent)', overflow: 'hidden' }}>
+              <img src="/profile.jpg" alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover', background: 'var(--bg-detail)' }} />
+            </div>
+            <div>
+              <h3 style={{ fontSize: '1.6rem', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '4px' }}>지수</h3>
+              <p style={{ fontFamily: 'var(--mono)', fontSize: '0.9rem', color: 'var(--accent)' }}>Backend Developer</p>
+            </div>
+          </div>
+          
+          <div>
+            <h4 style={{ fontSize: '0.9rem', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '12px' }}>Education & Activities</h4>
+            <ul style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <li style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                <span style={{ color: 'var(--accent)', marginTop: '2px' }}>•</span>
+                <span>OO 해커톤 최우수상 수상</span>
+              </li>
+              <li style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                <span style={{ color: 'var(--accent)', marginTop: '2px' }}>•</span>
+                <span>멋쟁이사자처럼 백엔드 스쿨 10기 수료</span>
+              </li>
+              <li style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                <span style={{ color: 'var(--accent)', marginTop: '2px' }}>•</span>
+                <span>OO 대학교 컴퓨터공학과 졸업</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
       </div>
     </section>
   );

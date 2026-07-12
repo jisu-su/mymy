@@ -53,7 +53,6 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
-  overflow: hidden;
 }
 
 body {
@@ -104,17 +103,12 @@ button {
    SCROLL SNAP CONTAINER (Vertical)
    ========================================================================== */
 .snap-container {
-  height: 100vh;
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
+  width: 100%;
 }
 
 .snap-section {
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -185,7 +179,7 @@ button {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  height: calc(100vh - 160px); /* 화면을 꽉 채우는 올인원 대시보드 스크린 */
+  height: calc(100vh - 200px);
   background: var(--bg-detail);
 }
 
