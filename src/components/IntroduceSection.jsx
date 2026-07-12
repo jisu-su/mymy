@@ -73,14 +73,13 @@ export default function IntroduceSection() {
           
           {/* Frontend Card */}
           <div className="border-offset-box" style={{ padding: '18px 22px', background: 'var(--bg-surface)' }}>
-            <div className="mono-font" style={{
-              fontSize: '0.7rem',
-              color: 'var(--text-muted)',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
+            <div style={{
+              fontSize: '0.8rem',
+              fontWeight: '700',
+              color: 'var(--text-primary)',
               marginBottom: '10px'
             }}>
-              Frontend
+              잘 다뤄요
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
               {frontendSkills.map((skill, idx) => (
@@ -101,14 +100,13 @@ export default function IntroduceSection() {
 
           {/* Backend Card */}
           <div className="border-offset-box" style={{ padding: '18px 22px', background: 'var(--bg-surface)' }}>
-            <div className="mono-font" style={{
-              fontSize: '0.7rem',
-              color: 'var(--text-muted)',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
+            <div style={{
+              fontSize: '0.8rem',
+              fontWeight: '700',
+              color: 'var(--text-primary)',
               marginBottom: '10px'
             }}>
-              Backend & Infra
+              다룰 수 있어요
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
               {backendSkills.map((skill, idx) => (
@@ -129,14 +127,13 @@ export default function IntroduceSection() {
 
           {/* Dev Card */}
           <div className="border-offset-box" style={{ padding: '18px 22px', background: 'var(--bg-surface)' }}>
-            <div className="mono-font" style={{
-              fontSize: '0.7rem',
-              color: 'var(--text-muted)',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
+            <div style={{
+              fontSize: '0.8rem',
+              fontWeight: '700',
+              color: 'var(--text-primary)',
               marginBottom: '10px'
             }}>
-              Dev & Collaboration
+              사용 해봤어요
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
               {devTools.map((skill, idx) => (

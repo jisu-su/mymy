@@ -109,32 +109,6 @@ export default function HeroSection() {
             >
               projects 보기 →
             </button>
-            <button 
-              onClick={scrollToContact}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '12px 28px',
-                border: '1px solid var(--border)',
-                color: 'var(--text-secondary)',
-                fontFamily: 'var(--mono)',
-                fontSize: '0.8rem',
-                borderRadius: '4px',
-                letterSpacing: '0.04em',
-                transition: 'all var(--transition)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'var(--accent)';
-                e.currentTarget.style.color = 'var(--accent)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'var(--border)';
-                e.currentTarget.style.color = 'var(--text-secondary)';
-              }}
-            >
-              contact
-            </button>
           </div>
 
           <div style={{
@@ -189,7 +163,7 @@ export default function HeroSection() {
           borderRadius: 'var(--radius-lg)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--bg-card)', border: '2px solid var(--accent)', overflow: 'hidden' }}>
+            <div style={{ width: '90px', height: '110px', borderRadius: '8px', background: 'var(--bg-card)', border: '2px solid var(--accent)', overflow: 'hidden' }}>
               <img src="/profile.jpg" alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover', background: 'var(--bg-detail)' }} />
             </div>
             <div>
@@ -215,6 +189,37 @@ export default function HeroSection() {
               </li>
             </ul>
           </div>
+          
+          <button 
+            onClick={scrollToContact}
+            style={{
+              marginTop: 'auto',
+              display: 'inline-flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '12px',
+              background: 'var(--bg-card)',
+              border: '1px solid var(--border)',
+              color: 'var(--text-primary)',
+              fontFamily: 'var(--sans)',
+              fontWeight: '600',
+              fontSize: '0.85rem',
+              borderRadius: '4px',
+              letterSpacing: '0.02em',
+              transition: 'all var(--transition)'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = 'var(--accent)';
+              e.currentTarget.style.color = 'var(--accent)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = 'var(--border)';
+              e.currentTarget.style.color = 'var(--text-primary)';
+            }}
+          >
+            Contact Me →
+          </button>
         </div>
 
       </div>

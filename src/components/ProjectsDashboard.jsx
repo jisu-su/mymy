@@ -14,11 +14,11 @@ export default function ProjectsDashboard() {
   }, [activeProjectIdx]);
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slidesCount);
+    setCurrentSlide((prev) => (prev < slidesCount - 1 ? prev + 1 : prev));
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slidesCount) % slidesCount);
+    setCurrentSlide((prev) => (prev > 0 ? prev - 1 : prev));
   };
 
   const getStatusBadgeStyle = (type) => {
@@ -558,6 +558,7 @@ export default function ProjectsDashboard() {
               <div style={{ display: 'flex', gap: '8px' }}>
                 <button 
                   onClick={prevSlide}
+                  disabled={currentSlide === 0}
                   style={{
                     fontFamily: 'var(--mono)',
                     fontSize: '0.68rem',
@@ -565,21 +566,28 @@ export default function ProjectsDashboard() {
                     border: '1px solid var(--border)',
                     borderRadius: '4px',
                     color: 'var(--text-secondary)',
-                    transition: 'all var(--transition)'
+                    transition: 'all var(--transition)',
+                    opacity: currentSlide === 0 ? 0.4 : 1,
+                    cursor: currentSlide === 0 ? 'not-allowed' : 'pointer'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'var(--accent)';
-                    e.currentTarget.style.color = 'var(--accent)';
+                    if (currentSlide !== 0) {
+                      e.currentTarget.style.borderColor = 'var(--accent)';
+                      e.currentTarget.style.color = 'var(--accent)';
+                    }
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'var(--border)';
-                    e.currentTarget.style.color = 'var(--text-secondary)';
+                    if (currentSlide !== 0) {
+                      e.currentTarget.style.borderColor = 'var(--border)';
+                      e.currentTarget.style.color = 'var(--text-secondary)';
+                    }
                   }}
                 >
                   &lt;─ PREV
                 </button>
                 <button 
                   onClick={nextSlide}
+                  disabled={currentSlide === slidesCount - 1}
                   style={{
                     fontFamily: 'var(--mono)',
                     fontSize: '0.68rem',
@@ -587,15 +595,21 @@ export default function ProjectsDashboard() {
                     border: '1px solid var(--border)',
                     borderRadius: '4px',
                     color: 'var(--text-secondary)',
-                    transition: 'all var(--transition)'
+                    transition: 'all var(--transition)',
+                    opacity: currentSlide === slidesCount - 1 ? 0.4 : 1,
+                    cursor: currentSlide === slidesCount - 1 ? 'not-allowed' : 'pointer'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'var(--accent)';
-                    e.currentTarget.style.color = 'var(--accent)';
+                    if (currentSlide !== slidesCount - 1) {
+                      e.currentTarget.style.borderColor = 'var(--accent)';
+                      e.currentTarget.style.color = 'var(--accent)';
+                    }
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'var(--border)';
-                    e.currentTarget.style.color = 'var(--text-secondary)';
+                    if (currentSlide !== slidesCount - 1) {
+                      e.currentTarget.style.borderColor = 'var(--border)';
+                      e.currentTarget.style.color = 'var(--text-secondary)';
+                    }
                   }}
                 >
                   NEXT ─&gt;
