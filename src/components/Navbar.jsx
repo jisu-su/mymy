@@ -60,7 +60,7 @@ export default function Navbar() {
       zIndex: 1000,
       display: 'flex',
       alignItems: 'center',
-      background: 'rgba(30, 30, 30, 0.85)',
+      background: 'rgba(247, 242, 232, 0.90)',
       backdropFilter: 'blur(12px)',
       borderBottom: isScrolled ? '1px solid var(--border)' : '1px solid transparent',
       transition: 'border-color var(--transition)'

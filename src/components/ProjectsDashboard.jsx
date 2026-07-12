@@ -24,15 +24,15 @@ export default function ProjectsDashboard() {
   const getStatusBadgeStyle = (type) => {
     switch (type) {
       case 'MAIN':
-        return { background: 'rgba(229, 169, 180, 0.2)', color: 'var(--accent)', border: '1px solid var(--accent)' };
+        return { background: 'rgba(216, 88, 120, 0.12)', color: '#C0405A', border: '1px solid rgba(192, 64, 90, 0.4)' };
       case 'TEAM':
-        return { background: 'rgba(130, 80, 255, 0.15)', color: '#BCA7FA', border: '1px solid rgba(130, 80, 255, 0.3)' };
+        return { background: 'rgba(130, 80, 255, 0.12)', color: '#5A32A8', border: '1px solid rgba(90, 50, 168, 0.4)' };
       case 'LIVE':
-        return { background: 'rgba(0, 255, 136, 0.15)', color: '#7DFFD6', border: '1px solid rgba(0, 255, 136, 0.3)' };
+        return { background: 'rgba(0, 200, 100, 0.12)', color: '#008A4B', border: '1px solid rgba(0, 138, 75, 0.4)' };
       case 'WIP':
-        return { background: 'rgba(255, 180, 0, 0.15)', color: '#FFD366', border: '1px solid rgba(255, 180, 0, 0.3)' };
+        return { background: 'rgba(220, 140, 0, 0.12)', color: '#B37700', border: '1px solid rgba(179, 119, 0, 0.4)' };
       default:
-        return { background: 'rgba(0, 180, 255, 0.15)', color: '#7CD0FF', border: '1px solid rgba(0, 180, 255, 0.3)' };
+        return { background: 'rgba(0, 150, 220, 0.12)', color: '#0066B3', border: '1px solid rgba(0, 102, 179, 0.4)' };
     }
   };
 
@@ -116,12 +116,12 @@ export default function ProjectsDashboard() {
               borderBottom: '1px solid var(--border)',
               display: 'flex',
               justifyContent: 'space-between',
-              alignItems: 'flex-start',
-              flexWrap: 'wrap',
+              alignItems: 'center',
+              flexWrap: 'nowrap',
               gap: '16px',
-              background: 'rgba(0,0,0,0.1)'
+              background: 'rgba(0,0,0,0.03)'
             }}>
-              <div>
+              <div style={{ flex: '1 1 auto', minWidth: 0 }}>
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -149,7 +149,8 @@ export default function ProjectsDashboard() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'flex-end',
-                gap: '12px'
+                gap: '12px',
+                flexShrink: 0
               }}>
                 <div style={{ display: 'flex', gap: '8px' }}>
                   {selectedProject.links?.github && (
@@ -205,7 +206,7 @@ export default function ProjectsDashboard() {
                 {/* Dashboard Tabs */}
                 <div style={{
                   display: 'flex',
-                  background: 'rgba(0,0,0,0.25)',
+                  background: 'rgba(0,0,0,0.07)',
                   padding: '3px',
                   borderRadius: '6px',
                   border: '1px solid var(--border)'
@@ -273,7 +274,7 @@ export default function ProjectsDashboard() {
                         fontFamily: 'var(--mono)',
                         fontSize: '0.66rem',
                         color: 'var(--accent)',
-                        background: 'rgba(0,0,0,0.3)',
+                        background: 'rgba(0,0,0,0.06)',
                         padding: '12px',
                         borderRadius: '4px',
                         overflowX: 'auto',
@@ -426,7 +427,7 @@ export default function ProjectsDashboard() {
                         marginTop: '12px',
                         fontSize: '0.75rem',
                         color: 'var(--text-secondary)',
-                        background: 'rgba(0,0,0,0.2)',
+                        background: 'rgba(0,0,0,0.04)',
                         padding: '8px 12px',
                         borderRadius: '4px',
                         border: '1px dashed var(--border)'
@@ -457,7 +458,7 @@ export default function ProjectsDashboard() {
                         color: 'var(--text-secondary)',
                         lineHeight: '1.6',
                         flex: 1,
-                        background: 'rgba(0,0,0,0.2)',
+                        background: 'rgba(0,0,0,0.05)',
                         padding: '14px',
                         borderRadius: '4px',
                         border: '1px solid var(--border)'
@@ -489,7 +490,7 @@ export default function ProjectsDashboard() {
                             display: 'flex',
                             gap: '8px',
                             alignItems: 'flex-start',
-                            background: 'rgba(0,0,0,0.1)',
+                            background: 'rgba(0,0,0,0.05)',
                             border: '1px solid var(--border)',
                             padding: '10px 12px',
                             borderRadius: '4px'
@@ -534,7 +535,7 @@ export default function ProjectsDashboard() {
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              background: 'rgba(0,0,0,0.1)'
+              background: 'rgba(0,0,0,0.04)'
             }}>
               {/* Progress Indicator */}
               <div style={{ display: 'flex', gap: '4px' }}>

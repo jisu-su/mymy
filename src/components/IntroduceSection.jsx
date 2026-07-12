@@ -10,7 +10,7 @@ export default function IntroduceSection() {
       id="about" 
       className="snap-section"
       style={{
-        background: '#2D2D2D',
+        background: 'var(--bg-base)',
         borderTop: '1px solid var(--border)',
         borderBottom: '1px solid var(--border)',
         display: 'flex',
@@ -18,15 +18,15 @@ export default function IntroduceSection() {
         paddingTop: '64px'
       }}
     >
-      <div className="container" style={{
+      <div className="container project-grid-responsive" style={{
         display: 'grid',
         gridTemplateColumns: '1fr 1.2fr',
         gap: '48px',
         alignItems: 'center'
-      }} className="project-grid-responsive">
+      }}>
         
         {/* Left column: Text */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', padding: '40px 0 0 20px' }}>
           <div style={{
             fontFamily: 'var(--mono)',
             fontSize: '0.72rem',
@@ -70,7 +70,7 @@ export default function IntroduceSection() {
         }}>
           
           {/* Frontend Card */}
-          <div className="border-offset-box" style={{ padding: '18px 22px', background: 'rgba(0,0,0,0.1)' }}>
+          <div className="border-offset-box" style={{ padding: '18px 22px', background: 'var(--bg-surface)' }}>
             <div className="mono-font" style={{
               fontSize: '0.7rem',
               color: 'var(--text-muted)',
@@ -98,7 +98,7 @@ export default function IntroduceSection() {
           </div>
 
           {/* Backend Card */}
-          <div className="border-offset-box" style={{ padding: '18px 22px', background: 'rgba(0,0,0,0.1)' }}>
+          <div className="border-offset-box" style={{ padding: '18px 22px', background: 'var(--bg-surface)' }}>
             <div className="mono-font" style={{
               fontSize: '0.7rem',
               color: 'var(--text-muted)',
@@ -126,7 +126,7 @@ export default function IntroduceSection() {
           </div>
 
           {/* Dev Card */}
-          <div className="border-offset-box" style={{ padding: '18px 22px', background: 'rgba(0,0,0,0.1)' }}>
+          <div className="border-offset-box" style={{ padding: '18px 22px', background: 'var(--bg-surface)' }}>
             <div className="mono-font" style={{
               fontSize: '0.7rem',
               color: 'var(--text-muted)',
@@ -143,7 +143,7 @@ export default function IntroduceSection() {
                   padding: '4px 10px',
                   borderRadius: '16px',
                   border: '1px solid var(--border)',
-                  background: 'rgba(255,255,255,0.02)',
+                  background: 'rgba(0,0,0,0.04)',
                   color: 'var(--text-secondary)'
                 }}>
                   {skill}

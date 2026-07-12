@@ -1,25 +1,37 @@
 /* ==========================================================================
    DESIGN TOKENS & VARIABLES
+   팔레트: #C8A882 · #DDBF9F · #F2EDD8 · #F5B8C4 · #F07898 · #D85878
    ========================================================================== */
 :root {
-  --bg-base:       #2A2B36; /* 어두움을 살리면서 한 톤 밝혀 눈이 편안한 미드 다크 톤 */
-  --bg-surface:    #323543; /* 분할용 부드러운 그레이 */
-  --bg-card:       #3A3E4E;
-  --bg-card-hover: #45495E;
-  --bg-detail:     #21232C; /* 상세 패널 배경 */
-  --border:        #4A4F64; /* 경계 라인 */
-  --border-bright: #5A607A;
-  --border-active: #E5A9B4;
-  --accent:        #E5A9B4; /* 세련된 머드 핑크 */
-  --accent-dim:    rgba(229, 169, 180, 0.18);
-  --accent-glow:   rgba(229, 169, 180, 0.08);
-  --danger:        #FF7B97;
-  --danger-dim:    rgba(255, 123, 151, 0.12);
-  --success:       #7DFFD6;
-  --success-dim:   rgba(125, 255, 214, 0.12);
-  --text-primary:  #F2F2F2;
-  --text-secondary:#B8BCC6;
-  --text-muted:    #7E8494;
+  /* ── Backgrounds ── */
+  --bg-base:       #F7F2E8;  /* 크림 (팔레트 3번 기반) */
+  --bg-surface:    #EDE5D0;  /* 따뜻한 라이트 베이지 */
+  --bg-card:       #E4D5BC;  /* 샌드 (팔레트 2번 기반) */
+  --bg-card-hover: #DAC9AA;
+  --bg-detail:     #FAF7F2;  /* 거의 화이트에 가까운 크림 */
+
+  /* ── Borders ── */
+  --border:        #C8A882;  /* 웜 탄 (팔레트 1번) */
+  --border-bright: #F07898;  /* 미디엄 핑크 (팔레트 5번) */
+  --border-active: #D85878;  /* 로즈 (팔레트 6번) */
+
+  /* ── Accent ── */
+  --accent:        #D85878;  /* 로즈 핑크 (팔레트 6번) */
+  --accent-dim:    rgba(216, 88, 120, 0.12);
+  --accent-glow:   rgba(216, 88, 120, 0.07);
+
+  /* ── Status ── */
+  --danger:        #C0405A;
+  --danger-dim:    rgba(192, 64, 90, 0.10);
+  --success:       #5E8A72;
+  --success-dim:   rgba(94, 138, 114, 0.12);
+
+  /* ── Typography ── */
+  --text-primary:  #2C1A14;  /* 매우 진한 웜 브라운 */
+  --text-secondary:#6B4A38;  /* 미디엄 웜 브라운 */
+  --text-muted:    #9C7A60;  /* 라이트 웜 브라운 */
+
+  /* ── Misc ── */
   --mono:          'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
   --sans:          'Inter', -apple-system, 'Segoe UI', sans-serif;
   --radius-sm:     4px;
@@ -174,30 +186,30 @@ button {
   border-radius: var(--radius-lg);
   overflow: hidden;
   height: calc(100vh - 160px); /* 화면을 꽉 채우는 올인원 대시보드 스크린 */
-  background: var(--bg-surface);
+  background: var(--bg-detail);
 }
 
 /* ── LEFT: 프로젝트 목록 패널 ── */
 .projects-left {
   border-right: 1px solid var(--border);
-  background: var(--bg-surface);
+  background: var(--bg-detail);
   overflow-y: auto;
   height: 100%;
 }
 
 .left-header {
-  padding: 20px 22px 16px;
+  padding: 12px 16px 10px;
   border-bottom: 1px solid var(--border);
   font-family: var(--mono);
   font-size: 0.68rem;
   color: var(--text-muted);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  background: var(--bg-detail);
+  background: var(--bg-surface);
 }
 
 .project-list-item {
-  padding: 20px 22px;
+  padding: 12px 16px;
   border-bottom: 1px solid var(--border);
   cursor: pointer;
   transition: background var(--transition), border-left-color var(--transition);
@@ -220,7 +232,7 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 .list-item-index {
   font-family: var(--mono);
@@ -233,7 +245,7 @@ button {
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: 6px;
+  margin-bottom: 2px;
   letter-spacing: -0.01em;
 }
 .project-list-item.active .list-item-title {
@@ -243,8 +255,8 @@ button {
 .list-item-sub {
   font-size: 0.75rem;
   color: var(--text-secondary);
-  line-height: 1.5;
-  margin-bottom: 10px;
+  line-height: 1.4;
+  margin-bottom: 8px;
 }
 
 .list-item-badges {

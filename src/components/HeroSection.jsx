@@ -24,21 +24,10 @@ export default function HeroSection() {
         alignItems: 'center',
         justifyContent: 'center',
         paddingTop: '64px',
-        background: 'radial-gradient(circle at 80% 20%, rgba(229, 169, 180, 0.04) 0%, transparent 60%), #1E1E1E',
+        background: 'radial-gradient(circle at 80% 20%, rgba(216, 88, 120, 0.06) 0%, transparent 60%), var(--bg-base)',
         position: 'relative'
       }}
     >
-      {/* Grid Background Effect */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        backgroundImage: 'linear-gradient(rgba(61, 61, 61, 0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(61, 61, 61, 0.15) 1px, transparent 1px)',
-        backgroundSize: '40px 40px',
-        maskImage: 'radial-gradient(ellipse 70% 60% at 50% 50%, black 40%, transparent 100%)',
-        WebkitMaskImage: 'radial-gradient(ellipse 70% 60% at 50% 50%, black 40%, transparent 100%)',
-        pointerEvents: 'none'
-      }} />
-
       <div className="container" style={{ position: 'relative', zIndex: 2 }}>
         <div style={{
           display: 'flex',
@@ -108,7 +97,7 @@ export default function HeroSection() {
                 gap: '8px',
                 padding: '12px 28px',
                 background: 'var(--accent)',
-                color: '#1E1E1E',
+                color: '#FAF7F2',
                 fontFamily: 'var(--mono)',
                 fontSize: '0.8rem',
                 fontWeight: '700',

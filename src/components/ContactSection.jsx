@@ -8,7 +8,7 @@ export default function ContactSection() {
       id="contact" 
       className="snap-section"
       style={{
-        background: '#1E1E1E',
+        background: 'var(--bg-base)',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -77,7 +77,7 @@ export default function ContactSection() {
               background: 'var(--accent)',
               border: '1px solid var(--accent)',
               borderRadius: '4px',
-              color: '#1E1E1E',
+              color: '#FAF7F2',
               fontFamily: 'var(--mono)',
               fontSize: '0.78rem',
               fontWeight: '700',
@@ -159,7 +159,7 @@ export default function ContactSection() {
         borderTop: '1px solid var(--border)',
         padding: '24px 0',
         textAlign: 'center',
-        background: '#1A1A1A'
+        background: 'var(--bg-surface)'
       }}>
         <div className="container">
           <p style={{
