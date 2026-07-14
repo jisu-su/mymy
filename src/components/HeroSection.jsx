@@ -121,7 +121,7 @@ export default function HeroSection() {
           }}>
             {[
               { num: '5', label: 'Projects Built' },
-              { num: '3', label: 'Team Projects' },
+              { num: '2', label: 'Team Projects' },
               { num: '1', label: 'Live Service' }
             ].map((stat, idx) => (
               <React.Fragment key={stat.label}>
