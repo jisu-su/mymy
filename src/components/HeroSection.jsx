@@ -163,12 +163,12 @@ export default function HeroSection() {
           borderRadius: 'var(--radius-lg)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <div style={{ width: '90px', height: '110px', borderRadius: '8px', background: 'var(--bg-card)', border: '2px solid var(--accent)', overflow: 'hidden' }}>
+            <div style={{ width: '110px', height: '130px', borderRadius: '8px', background: 'var(--bg-card)', border: '1px solid var(--accent)', overflow: 'hidden' }}>
               <img src="/profile.jpg" alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover', background: 'var(--bg-detail)' }} />
             </div>
             <div>
               <h3 style={{ fontSize: '1.6rem', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '4px' }}>박지수</h3>
-              <p style={{ fontFamily: 'var(--mono)', fontSize: '0.9rem', color: 'var(--accent)' }}>PARK JISU</p>
+              <p style={{ fontFamily: 'var(--mono)', fontSize: '1.1rem', color: 'var(--accent)' }}>PARK JISU</p>
             </div>
           </div>
           
@@ -187,7 +187,7 @@ export default function HeroSection() {
             <ul style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <li style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
                 <span style={{ color: 'var(--accent)', marginTop: '2px' }}>•</span>
-                <span>[그린컴퓨터학원] Cursor AI를 활용한 BM 개발자 취·창업 과정 (Python, AWS, 지역특화 프로젝트) 수료 / 2025.11 ~ 2026.04 약 5개월</span>
+                <span>[그린컴퓨터학원] Cursor AI를 활용한 BM 개발자 취·창업 과정 (Python, AWS, 지역특화 프로젝트) 수료 <br>2025.11 ~ 2026.04 약 5개월</br></span>
               </li>
             </ul>
           </div>
