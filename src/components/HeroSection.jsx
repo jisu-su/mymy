@@ -167,25 +167,27 @@ export default function HeroSection() {
               <img src="/profile.jpg" alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover', background: 'var(--bg-detail)' }} />
             </div>
             <div>
-              <h3 style={{ fontSize: '1.6rem', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '4px' }}>지수</h3>
-              <p style={{ fontFamily: 'var(--mono)', fontSize: '0.9rem', color: 'var(--accent)' }}>Backend Developer</p>
+              <h3 style={{ fontSize: '1.6rem', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '4px' }}>박지수</h3>
+              <p style={{ fontFamily: 'var(--mono)', fontSize: '0.9rem', color: 'var(--accent)' }}>PARK JISU</p>
             </div>
           </div>
           
           <div>
-            <h4 style={{ fontSize: '0.9rem', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '12px' }}>Education & Activities</h4>
+            <h4 style={{ fontSize: '0.9rem', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '12px' }}>학력</h4>
             <ul style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <li style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
                 <span style={{ color: 'var(--accent)', marginTop: '2px' }}>•</span>
-                <span>OO 해커톤 최우수상 수상</span>
+                <span>서울종합예술실용학교 뷰티예술학과(4년제) 졸업</span>
               </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 style={{ fontSize: '0.9rem', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '12px' }}>교육 이수 사항</h4>
+            <ul style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <li style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
                 <span style={{ color: 'var(--accent)', marginTop: '2px' }}>•</span>
-                <span>멋쟁이사자처럼 백엔드 스쿨 10기 수료</span>
-              </li>
-              <li style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                <span style={{ color: 'var(--accent)', marginTop: '2px' }}>•</span>
-                <span>OO 대학교 컴퓨터공학과 졸업</span>
+                <span>[그린컴퓨터학원] Cursor AI를 활용한 BM 개발자 취·창업 과정 (Python, AWS, 지역특화 프로젝트) 수료 / 2025.11 ~ 2026.04 약 5개월</span>
               </li>
             </ul>
           </div>
