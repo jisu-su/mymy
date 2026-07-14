@@ -187,7 +187,7 @@ export default function HeroSection() {
             <ul style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <li style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
                 <span style={{ color: 'var(--accent)', marginTop: '2px' }}>•</span>
-                <span>[그린컴퓨터학원] Cursor AI를 활용한 BM 개발자 취·창업 과정 (Python, AWS, 지역특화 프로젝트) 수료 <br>2025.11 ~ 2026.04 약 5개월</br></span>
+                <span>[그린컴퓨터학원] Cursor AI를 활용한 BM 개발자 취·창업 과정 (Python, AWS, 지역특화 프로젝트) 수료 <br />2025.11 ~ 2026.04 약 5개월</span>
               </li>
             </ul>
           </div>
